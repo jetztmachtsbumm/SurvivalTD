@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666efb8fb782e38428124f8816e27cd0, type: 3}
-  m_Name: ResourceTypeListSO
+  m_Script: {fileID: 11500000, guid: 851f4cbb467d50843833b128bd6616fa, type: 3}
+  m_Name: Stone
   m_EditorClassIdentifier: 
-  list:
-  - {fileID: 11400000, guid: 1565a988df6a92e40ac4dad654e6cd6e, type: 2}
+  nameString: Stone
+  sprite: {fileID: 21300000, guid: bf1f52e02f478b84ba47e944421ba9a5, type: 3}

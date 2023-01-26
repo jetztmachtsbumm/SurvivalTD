@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceAmount
+public class ItemStack
 {
 
-    public ResourceTypeSO resourceType;
+    public ItemSO item;
     public int amount;
 
 }
