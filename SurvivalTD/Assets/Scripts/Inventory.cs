@@ -69,6 +69,34 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void RemoveItem(ItemStack item)
+    {
+        foreach(ItemStack itemStack in items.Values)
+        {
+            if (itemStack == null) continue;
+
+            if(item.item == itemStack.item)
+            {
+                itemStack.amount -= item.amount;
+
+                if(itemStack.amount <= 0)
+                {
+                    foreach(GameObject cell in items.Keys)
+                    {
+                        if (items[cell] == itemStack)
+                        {
+                            items[cell] = null;
+                            break;
+                        }
+                    }
+                }
+
+                UpdateVisuals();
+                return;
+            }
+        }
+    }
+
     private void UpdateVisuals()
     {
         foreach(GameObject gameObject in items.Keys)
