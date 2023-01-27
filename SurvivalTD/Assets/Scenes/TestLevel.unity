@@ -180,9 +180,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1212186686315954581, guid: dd240cd0a2123df41937c52f572c135d,
         type: 3}
-      propertyPath: mouseSensitivity
-      value: 15
-      objectReference: {fileID: 0}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 362159277}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd240cd0a2123df41937c52f572c135d, type: 3}
 --- !u!1 &197154728
@@ -314,7 +314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &362159278
 RectTransform:
   m_ObjectHideFlags: 0
