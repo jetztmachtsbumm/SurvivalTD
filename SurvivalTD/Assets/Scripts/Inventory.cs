@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class Inventory : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private GameObject inventoryCell;
 
-    private Dictionary<GameObject, ItemStack> items;
+    private List<InventoryCell> inventoryCells;
 
     private void Awake()
     {
@@ -22,7 +20,7 @@ public class Inventory : MonoBehaviour
         }
         Instance = this;
 
-        items = new Dictionary<GameObject, ItemStack>();
+        inventoryCells = new List<InventoryCell>();
 
         int invHeight = 5;
         int invWidth = 10;
@@ -39,84 +37,54 @@ public class Inventory : MonoBehaviour
 
                 rectTransform.anchoredPosition = new Vector2(startWidth + (offset * w), startHeight - (offset * h));
 
-                items[cell] = null;
+                inventoryCells.Add(cell.GetComponent<InventoryCell>());
             }
         }
     }
 
-    public void AddItem(ItemStack item)
+    public void AddItem(ItemStack itemStack)
     {
-        foreach(ItemStack itemStack in items.Values)
+        foreach(InventoryCell cell in inventoryCells)
         {
-            if (itemStack == null) continue;
-            
-            if(item.item == itemStack.item)
+            if (cell.GetItemStack() == null) continue;
+
+            if(cell.GetItemStack().item == itemStack.item)
             {
-                itemStack.amount += item.amount;
-                UpdateVisuals();
+                cell.GetItemStack().amount += itemStack.amount;
+                cell.UpdateVisuals();
                 return;
             }
         }
 
-        foreach(GameObject cell in items.Keys)
+        foreach(InventoryCell cell in inventoryCells)
         {
-            if (items[cell] == null)
+            if(cell.GetItemStack() == null)
             {
-                items[cell] = item;
-                UpdateVisuals();
+                cell.SetItemStack(itemStack);
+                cell.UpdateVisuals();
                 return;
             }
         }
     }
 
-    public void RemoveItem(ItemStack item)
+    public void RemoveItem(ItemStack itemStack)
     {
-        foreach(ItemStack itemStack in items.Values)
+        foreach(InventoryCell cell in inventoryCells)
         {
-            if (itemStack == null) continue;
+            if (cell.GetItemStack() == null) continue;
 
-            if(item.item == itemStack.item)
+            if(cell.GetItemStack().item == itemStack.item)
             {
-                itemStack.amount -= item.amount;
+                cell.GetItemStack().amount -= itemStack.amount;
 
-                if(itemStack.amount <= 0)
+                if(cell.GetItemStack().amount <= 0)
                 {
-                    foreach(GameObject cell in items.Keys)
-                    {
-                        if (items[cell] == itemStack)
-                        {
-                            items[cell] = null;
-                            break;
-                        }
-                    }
+                    cell.SetItemStack(null);
                 }
 
-                UpdateVisuals();
+                cell.UpdateVisuals();
                 return;
             }
-        }
-    }
-
-    private void UpdateVisuals()
-    {
-        foreach(GameObject gameObject in items.Keys)
-        {
-            Image contentImage = gameObject.transform.Find("Content").GetComponent<Image>();
-            TextMeshProUGUI text = gameObject.transform.Find("Amount").GetComponent<TextMeshProUGUI>();
-
-            if (items[gameObject] == null)
-            {
-                contentImage.gameObject.SetActive(false);
-                text.text = "";
-                return;
-            }
-
-            ItemStack itemStack = items[gameObject];
-
-            contentImage.gameObject.SetActive(true);
-
-            contentImage.sprite = itemStack.item.sprite;
-            text.text = itemStack.amount.ToString();
         }
     }
 
