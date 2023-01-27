@@ -40,6 +40,8 @@ public class Inventory : MonoBehaviour
                 inventoryCells.Add(cell.GetComponent<InventoryCell>());
             }
         }
+
+        gameObject.SetActive(false);
     }
 
     public void AddItem(ItemStack itemStack)

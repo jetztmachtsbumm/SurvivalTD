@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
     private ItemStack itemStack;
@@ -43,6 +43,35 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerExit(PointerEventData eventData)
     {
         selectedVisual.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!MovingItem.Instance.gameObject.activeInHierarchy)
+        {
+            if (itemStack == null) return;
+
+            MovingItem.Instance.SetItemStack(itemStack);
+            itemStack = null;
+            MovingItem.Instance.gameObject.SetActive(true);
+        }
+        else
+        {
+            ItemStack movingItemStack = MovingItem.Instance.GetItemStack();
+
+            if(itemStack != null)
+            {
+                MovingItem.Instance.SetItemStack(itemStack);
+            }
+            else
+            {
+                MovingItem.Instance.gameObject.SetActive(false);
+            }
+
+            itemStack = movingItemStack;
+        }
+
+        UpdateVisuals();
     }
 
     public ItemStack GetItemStack()
