@@ -206,7 +206,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  mouseSensitivity: 10
+  mouseSensitivity: 15
+  inventory: {fileID: 0}
 --- !u!1001 &2018331843934149693
 PrefabInstance:
   m_ObjectHideFlags: 0

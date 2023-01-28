@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerControlls : MonoBehaviour
 {
 
     [SerializeField] private float movementSpeed;
     [SerializeField] private float mouseSensitivity;
+    [SerializeField] private GameObject inventory;
 
     float xRotation = 0;
 
@@ -18,9 +19,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
-        HandleRotation();
-        HandleCameraUpDown();
+        if (!HandleInventory())
+        {
+            HandleMovement();
+            HandleRotation();
+            HandleCameraUpDown();
+        }
     }
 
     private void HandleMovement()
@@ -49,6 +53,30 @@ public class PlayerMovement : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90, 70);
 
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+    }
+
+    private bool HandleInventory()
+    {
+        if (inventory.activeInHierarchy)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I))
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                inventory.SetActive(false);
+            }
+            return true;
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                inventory.SetActive(true);
+            }
+            return false;
+        }
     }
 
 }

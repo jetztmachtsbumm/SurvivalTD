@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2667d122aa8ec44bb5ee4992281d9af, type: 3}
+  m_Script: {fileID: 11500000, guid: 851f4cbb467d50843833b128bd6616fa, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
   nameString: Wood
-  sprite: {fileID: 21300000, guid: 670d88d15bd70bd4fb95738e5ffaffb8, type: 3}
+  sprite: {fileID: 21300000, guid: 1368bb76ecd344c4bb47960bd842b223, type: 3}
