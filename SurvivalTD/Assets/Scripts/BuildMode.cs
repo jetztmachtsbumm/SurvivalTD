@@ -24,6 +24,18 @@ public class BuildMode : MonoBehaviour
 
     private void Update()
     {
+        HandleInput();
+        HandleBuilding();
+    }
+
+    public void UpdateBuildingGhostMesh()
+    {
+        buildingGhost.GetComponent<MeshFilter>().mesh = buildingGhostMesh;
+        buildingGhost.gameObject.SetActive(true);
+    }
+
+    private void HandleInput()
+    {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (inBuildMode)
@@ -37,46 +49,52 @@ public class BuildMode : MonoBehaviour
                 inBuildMode = true;
             }
         }
-
-        if (inBuildMode)
-        {
-            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 50f))
-            {
-                GridPosition hitGridPosition = LevelGrid.Instance.GetGridPosition(hit.point);
-                Material material = buildingGhost.GetComponent<MeshRenderer>().material;
-
-                if (LevelGrid.Instance.IsValidGridPosition(hitGridPosition))
-                {
-                    buildingGhost.transform.position = LevelGrid.Instance.GetWorldPosition(hitGridPosition);
-
-                    if (!LevelGrid.Instance.IsGridPositionOccupied(hitGridPosition))
-                    {
-                        material.SetColor("_MainColor", validColor);
-
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            Instantiate(selectedBuilding.prefab, buildingGhost.transform.position, buildingGhost.transform.rotation);
-                            LevelGrid.Instance.GetGridObject(hitGridPosition).SetBuilding(selectedBuilding);
-                        }
-                    }
-                    else
-                    {
-                        material.SetColor("_MainColor", invalidColor);
-                    }
-                }
-                else
-                {
-                    material.SetColor("_MainColor", invalidColor);
-                    buildingGhost.transform.position = hit.point + new Vector3(0, 0.5f, 0);
-                }
-            }
-        }
     }
 
-    public void UpdateBuildingGhostMesh()
+    private void HandleBuilding()
     {
-        buildingGhost.GetComponent<MeshFilter>().mesh = buildingGhostMesh;
-        buildingGhost.gameObject.SetActive(true);
+        if (!inBuildMode)
+        {
+            return;
+        }
+
+        if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 50f))
+        {
+            return;
+        }
+
+        GridPosition hitGridPosition = LevelGrid.Instance.GetGridPosition(hit.point);
+        Material material = buildingGhost.GetComponent<MeshRenderer>().material;
+
+        if (!LevelGrid.Instance.IsValidGridPosition(hitGridPosition))
+        {
+            material.SetColor("_MainColor", invalidColor);
+            buildingGhost.transform.position = hit.point + new Vector3(0, 0.5f, 0);
+            return;
+        }
+
+        buildingGhost.transform.position = LevelGrid.Instance.GetWorldPosition(hitGridPosition);
+
+        if (LevelGrid.Instance.IsGridPositionOccupied(hitGridPosition))
+        {
+            material.SetColor("_MainColor", invalidColor);
+            return;
+        }
+
+        if (!selectedBuilding.constructionCost.CanAfford(Inventory.Instance.GetAllItems()))
+        {
+            material.SetColor("_MainColor", invalidColor);
+            return;
+        }
+
+        material.SetColor("_MainColor", validColor);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Instantiate(selectedBuilding.prefab, buildingGhost.transform.position, buildingGhost.transform.rotation);
+            LevelGrid.Instance.GetGridObject(hitGridPosition).SetBuilding(selectedBuilding);
+            Inventory.Instance.SpendItems(selectedBuilding.constructionCost);
+        }
     }
 
 }
