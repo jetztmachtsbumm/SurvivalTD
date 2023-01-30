@@ -5,8 +5,14 @@ using UnityEngine;
 public class BuildMode : MonoBehaviour
 {
 
-    [SerializeField] BuildingSO selectedBuilding;
-    [SerializeField] Transform buildingGhost;
+    [SerializeField] private BuildingSO selectedBuilding;
+    [SerializeField] private Transform buildingGhost;
+
+    [ColorUsage(true, true)]
+    [SerializeField] private Color validColor;
+
+    [ColorUsage(true, true)]
+    [SerializeField] private Color invalidColor;
 
     private bool inBuildMode = false;
     private Mesh buildingGhostMesh;
@@ -38,21 +44,30 @@ public class BuildMode : MonoBehaviour
             {
                 GridPosition hitGridPosition = LevelGrid.Instance.GetGridPosition(hit.point);
                 Material material = buildingGhost.GetComponent<MeshRenderer>().material;
+
                 if (LevelGrid.Instance.IsValidGridPosition(hitGridPosition))
                 {
                     buildingGhost.transform.position = LevelGrid.Instance.GetWorldPosition(hitGridPosition);
-                    if (material.GetColor("_MainColor") != Color.cyan)
+
+                    if (!LevelGrid.Instance.IsGridPositionOccupied(hitGridPosition))
                     {
-                        material.SetColor("_MainColor", Color.cyan);
+                        material.SetColor("_MainColor", validColor);
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            Instantiate(selectedBuilding.prefab, buildingGhost.transform.position, buildingGhost.transform.rotation);
+                            LevelGrid.Instance.GetGridObject(hitGridPosition).SetBuilding(selectedBuilding);
+                        }
+                    }
+                    else
+                    {
+                        material.SetColor("_MainColor", invalidColor);
                     }
                 }
                 else
                 {
+                    material.SetColor("_MainColor", invalidColor);
                     buildingGhost.transform.position = hit.point + new Vector3(0, 0.5f, 0);
-                    if (material.GetColor("_MainColor") != Color.red)
-                    {
-                        material.SetColor("_MainColor", Color.red);
-                    }
                 }
             }
         }

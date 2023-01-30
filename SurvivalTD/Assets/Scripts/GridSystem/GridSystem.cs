@@ -52,6 +52,11 @@ public class GridSystem
             gridPosition.z < height;
     }
 
+    public bool IsGridPositionOccupied(GridPosition gridPosition)
+    {
+        return GetGridObject(gridPosition).GetBuilding() != null;
+    }
+
     public int GetWidth()
     {
         return width;
