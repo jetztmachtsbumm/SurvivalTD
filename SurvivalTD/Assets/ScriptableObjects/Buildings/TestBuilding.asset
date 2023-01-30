@@ -14,3 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 3920918488251817571, guid: fecfba4c440e0e949b491d1febb83b03, type: 3}
   nameString: Test Building
+  constructionCost:
+    cost:
+    - item: {fileID: 11400000, guid: 04afa99a60b8fa14a94eb2ddd694a5e6, type: 2}
+      amount: 10
+    - item: {fileID: 11400000, guid: d64b64ed5cee939418d5bf6edca94b19, type: 2}
+      amount: 5
+    - item: {fileID: 11400000, guid: 4b9d2b044997a76419c3eb227fb6128f, type: 2}
+      amount: 2

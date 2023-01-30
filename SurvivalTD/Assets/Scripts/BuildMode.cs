@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BuildMode : MonoBehaviour
 {
 
     [SerializeField] private BuildingSO selectedBuilding;
     [SerializeField] private Transform buildingGhost;
+    [SerializeField] private GameObject errorMessage;
 
     [ColorUsage(true, true)]
     [SerializeField] private Color validColor;
@@ -55,11 +57,14 @@ public class BuildMode : MonoBehaviour
     {
         if (!inBuildMode)
         {
+            errorMessage.SetActive(false);
             return;
         }
 
         if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 50f))
         {
+            errorMessage.SetActive(true);
+            errorMessage.GetComponentInChildren<TextMeshProUGUI>().text = "Invalid aim position!";
             return;
         }
 
@@ -70,6 +75,8 @@ public class BuildMode : MonoBehaviour
         {
             material.SetColor("_MainColor", invalidColor);
             buildingGhost.transform.position = hit.point + new Vector3(0, 0.5f, 0);
+            errorMessage.SetActive(true);
+            errorMessage.GetComponentInChildren<TextMeshProUGUI>().text = "Invalid position!";
             return;
         }
 
@@ -78,14 +85,19 @@ public class BuildMode : MonoBehaviour
         if (LevelGrid.Instance.IsGridPositionOccupied(hitGridPosition))
         {
             material.SetColor("_MainColor", invalidColor);
+            errorMessage.SetActive(true);
+            errorMessage.GetComponentInChildren<TextMeshProUGUI>().text = "Position is occupied";
             return;
         }
 
         if (!selectedBuilding.constructionCost.CanAfford(Inventory.Instance.GetAllItems()))
         {
-            material.SetColor("_MainColor", invalidColor);
+            material.SetColor("_MainColor", invalidColor); errorMessage.SetActive(true);
+            errorMessage.GetComponentInChildren<TextMeshProUGUI>().text = "Cannot afford!";
             return;
         }
+
+        errorMessage.SetActive(false);
 
         material.SetColor("_MainColor", validColor);
 
