@@ -90,4 +90,26 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void SpendItems(ItemCost itemCost)
+    {
+        foreach(ItemStack itemStack in itemCost.GetCost())
+        {
+            RemoveItem(itemStack);
+        }
+    }
+
+    public ItemStack[] GetAllItems()
+    {
+        List<ItemStack> items = new List<ItemStack>();
+        foreach(InventoryCell cell in inventoryCells)
+        {
+            if(cell.GetItemStack() != null)
+            {
+                items.Add(cell.GetItemStack());
+            }
+        }
+
+        return items.ToArray();
+    }
+
 }
