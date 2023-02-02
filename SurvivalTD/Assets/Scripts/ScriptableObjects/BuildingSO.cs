@@ -9,5 +9,6 @@ public class BuildingSO : ScriptableObject
     public Transform prefab;
     public string nameString;
     public ItemCost constructionCost;
+    public float timeToConstruct;
 
 }

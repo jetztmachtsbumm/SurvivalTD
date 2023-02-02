@@ -6,6 +6,8 @@ using TMPro;
 public class BuildMode : MonoBehaviour
 {
 
+    public static BuildMode Instance { get; private set; }
+
     [SerializeField] private BuildingSO selectedBuilding;
     [SerializeField] private Transform buildingGhost;
     [SerializeField] private GameObject errorMessage;
@@ -21,6 +23,12 @@ public class BuildMode : MonoBehaviour
 
     private void Awake()
     {
+        if(Instance != null)
+        {
+            Debug.LogWarning("It seems like there is more than one BuildMode object active in the scene!");
+            Destroy(gameObject);
+        }
+        Instance = this;
         buildingGhostMesh = selectedBuilding.prefab.GetComponent<MeshFilter>().sharedMesh;
     }
 
@@ -103,7 +111,7 @@ public class BuildMode : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(selectedBuilding.prefab, buildingGhost.transform.position, buildingGhost.transform.rotation);
+            BuildingConstruction.Create(LevelGrid.Instance.GetWorldPosition(hitGridPosition), buildingGhost.transform.localRotation, selectedBuilding);
             LevelGrid.Instance.GetGridObject(hitGridPosition).SetBuilding(selectedBuilding);
             Inventory.Instance.SpendItems(selectedBuilding.constructionCost);
         }
