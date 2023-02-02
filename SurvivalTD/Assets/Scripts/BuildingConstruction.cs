@@ -50,7 +50,7 @@ public class BuildingConstruction : MonoBehaviour
 
     private float GetConstructionTimerNormalized()
     {
-        return 0 + constructionTimer / constructedBuilding.timeToConstruct;
+        return constructionTimer / constructedBuilding.timeToConstruct;
     }
 
 }

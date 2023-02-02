@@ -19,7 +19,6 @@ public class BuildMode : MonoBehaviour
     [SerializeField] private Color invalidColor;
 
     private bool inBuildMode = false;
-    private Mesh buildingGhostMesh;
 
     private void Awake()
     {
@@ -29,7 +28,6 @@ public class BuildMode : MonoBehaviour
             Destroy(gameObject);
         }
         Instance = this;
-        buildingGhostMesh = selectedBuilding.prefab.GetComponent<MeshFilter>().sharedMesh;
     }
 
     private void Update()
@@ -40,7 +38,7 @@ public class BuildMode : MonoBehaviour
 
     public void UpdateBuildingGhostMesh()
     {
-        buildingGhost.GetComponent<MeshFilter>().mesh = buildingGhostMesh;
+        buildingGhost.GetComponent<MeshFilter>().mesh = UtilsClass.CombineMeshes(selectedBuilding.prefab.gameObject);
         buildingGhost.gameObject.SetActive(true);
     }
 
