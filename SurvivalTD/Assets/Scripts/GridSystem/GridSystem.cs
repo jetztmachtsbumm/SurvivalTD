@@ -24,7 +24,19 @@ public class GridSystem
             for(int z = 0; z < height; z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
-                gridObjects[x, z] = new GridObject(this, gridPosition);
+                GridObject gridObject = new GridObject(this, gridPosition);
+
+                Collider[] colliderOnPosition = Physics.OverlapBox(GetWorldPosition(gridPosition), new Vector3(0.5f, 0.5f, 0.5f));
+                foreach(Collider collider in colliderOnPosition)
+                {
+                    if(collider.transform.TryGetComponent(out ResourceNode resourceNode))
+                    {
+                        gridObject.SetResourceNode(resourceNode);
+                        break;
+                    }
+                }
+
+                gridObjects[x, z] = gridObject;
             }
         }
     }
@@ -54,7 +66,7 @@ public class GridSystem
 
     public bool IsGridPositionOccupied(GridPosition gridPosition)
     {
-        return GetGridObject(gridPosition).GetBuilding() != null;
+        return GetGridObject(gridPosition).IsOccupied();
     }
 
     public int GetWidth()
