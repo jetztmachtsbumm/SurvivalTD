@@ -5,8 +5,6 @@ using UnityEngine;
 public class GridSystem
 {
 
-    [SerializeField] private GameObject testCube;
-
     private int width;
     private int height;
     private float cellSize;
@@ -26,7 +24,7 @@ public class GridSystem
                 GridPosition gridPosition = new GridPosition(x, z);
                 GridObject gridObject = new GridObject(this, gridPosition);
 
-                Collider[] colliderOnPosition = Physics.OverlapBox(GetWorldPosition(gridPosition), new Vector3(0.5f, 0.5f, 0.5f));
+                Collider[] colliderOnPosition = Physics.OverlapBox(GetWorldPosition(gridPosition), new Vector3(cellSize / 2, 10f, cellSize / 2));
                 foreach(Collider collider in colliderOnPosition)
                 {
                     if(collider.transform.TryGetComponent(out ResourceNode resourceNode))
