@@ -22,9 +22,9 @@ public class BuildingConstruction : MonoBehaviour
         construction.GetComponent<BuildingConstruction>().Setup(constructedBuilding);
     }
 
-    private BuildingSO constructedBuilding;
-    private float constructionTimer;
-    private Material constructionMaterial;
+    private BuildingSO constructedBuilding; 
+    private float constructionTimer;        
+    private Material constructionMaterial;  
 
     private void Awake()
     {

@@ -103,6 +103,15 @@ public class BuildMode : MonoBehaviour
             return;
         }
 
+        BaseBuilding baseBuilding = selectedBuilding.prefab.GetComponent<BaseBuilding>();
+
+        if(!baseBuilding.IsBuildingConditionMet(hitGridPosition, out string error))
+        {
+            material.SetColor("_MainColor", invalidColor); errorMessage.SetActive(true);
+            errorMessage.GetComponentInChildren<TextMeshProUGUI>().text = error;
+            return;
+        }
+
         errorMessage.SetActive(false);
 
         material.SetColor("_MainColor", validColor);
