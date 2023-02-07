@@ -2,31 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public abstract class Container : MonoBehaviour
 {
 
-    public static Inventory Instance { get; private set; }
+    [SerializeField] private int invHeight = 5;
+    [SerializeField] private int invWidth = 10;
+    [SerializeField] private int startHeight = 120;
+    [SerializeField] private int startWidth = -270;
+    [SerializeField] private int offset = 60;
 
-    [SerializeField] private GameObject inventoryCell;
+    private GameObject inventoryCell;
+    private List<ContainerCell> inventoryCells;
 
-    private List<InventoryCell> inventoryCells;
-
-    private void Awake()
+    protected virtual void Awake()
     {
-        if(Instance != null)
-        {
-            Debug.LogWarning("It seems like there's more than one Inventory active in the scene!");
-            Destroy(gameObject);
-        }
-        Instance = this;
-
-        inventoryCells = new List<InventoryCell>();
-
-        int invHeight = 5;
-        int invWidth = 10;
-        int startHeight = 120;
-        int startWidth = -270;
-        int offset = 60;
+        inventoryCell = Resources.Load<GameObject>("InventoryCell");
+        inventoryCells = new List<ContainerCell>();
 
         for (int h = 0; h < invHeight; h++)
         {
@@ -37,7 +28,7 @@ public class Inventory : MonoBehaviour
 
                 rectTransform.anchoredPosition = new Vector2(startWidth + (offset * w), startHeight - (offset * h));
 
-                inventoryCells.Add(cell.GetComponent<InventoryCell>());
+                inventoryCells.Add(cell.GetComponent<ContainerCell>());
             }
         }
 
@@ -46,11 +37,11 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemStack itemStack)
     {
-        foreach(InventoryCell cell in inventoryCells)
+        foreach (ContainerCell cell in inventoryCells)
         {
             if (cell.GetItemStack() == null) continue;
 
-            if(cell.GetItemStack().item == itemStack.item)
+            if (cell.GetItemStack().item == itemStack.item)
             {
                 cell.GetItemStack().amount += itemStack.amount;
                 cell.UpdateVisuals();
@@ -58,9 +49,9 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        foreach(InventoryCell cell in inventoryCells)
+        foreach (ContainerCell cell in inventoryCells)
         {
-            if(cell.GetItemStack() == null)
+            if (cell.GetItemStack() == null)
             {
                 cell.SetItemStack(itemStack);
                 cell.UpdateVisuals();
@@ -71,15 +62,15 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(ItemStack itemStack)
     {
-        foreach(InventoryCell cell in inventoryCells)
+        foreach (ContainerCell cell in inventoryCells)
         {
             if (cell.GetItemStack() == null) continue;
 
-            if(cell.GetItemStack().item == itemStack.item)
+            if (cell.GetItemStack().item == itemStack.item)
             {
                 cell.GetItemStack().amount -= itemStack.amount;
 
-                if(cell.GetItemStack().amount <= 0)
+                if (cell.GetItemStack().amount <= 0)
                 {
                     cell.SetItemStack(null);
                 }
@@ -90,20 +81,12 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void SpendItems(ItemCost itemCost)
-    {
-        foreach(ItemStack itemStack in itemCost.GetCost())
-        {
-            RemoveItem(itemStack);
-        }
-    }
-
     public ItemStack[] GetAllItems()
     {
         List<ItemStack> items = new List<ItemStack>();
-        foreach(InventoryCell cell in inventoryCells)
+        foreach (ContainerCell cell in inventoryCells)
         {
-            if(cell.GetItemStack() != null)
+            if (cell.GetItemStack() != null)
             {
                 items.Add(cell.GetItemStack());
             }

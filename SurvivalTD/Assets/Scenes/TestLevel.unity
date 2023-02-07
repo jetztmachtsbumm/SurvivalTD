@@ -955,7 +955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba486815c538eb468e2f88262b89b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedBuilding: {fileID: 11400000, guid: a824e3eee0d49984db6e6178a0d5a892, type: 2}
+  selectedBuilding: {fileID: 11400000, guid: f40c08f66a42db1498d8dbb7da1da427, type: 2}
   buildingGhost: {fileID: 1032975868}
   errorMessage: {fileID: 1278864419}
   validColor: {r: 0, g: 0.41039923, b: 2.1185474, a: 1}

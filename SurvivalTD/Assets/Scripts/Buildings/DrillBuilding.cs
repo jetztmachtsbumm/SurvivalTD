@@ -19,7 +19,7 @@ public class DrillBuilding : BaseBuilding
         timer -= Time.deltaTime;
         if(timer <= 0)
         {
-            Inventory.Instance.AddItem(new ItemStack() { item = resourceNode.GetResource(), amount = resourceNode.GetResourcesPerSecond() });
+            PlayerInventory.Instance.AddItem(new ItemStack() { item = resourceNode.GetResource(), amount = resourceNode.GetResourcesPerSecond() });
             timer = 1;
         }
     }
