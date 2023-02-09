@@ -5,8 +5,14 @@ using UnityEngine;
 public class DrillBuilding : BaseBuilding
 {
 
+    private Inventory inventory;
     private ResourceNode resourceNode;
     private float timer;
+
+    private void Awake()
+    {
+        inventory = GetComponent<Inventory>();
+    }
 
     private void Start()
     {
@@ -19,7 +25,7 @@ public class DrillBuilding : BaseBuilding
         timer -= Time.deltaTime;
         if(timer <= 0)
         {
-            PlayerInventory.Instance.AddItem(new ItemStack() { item = resourceNode.GetResource(), amount = resourceNode.GetResourcesPerSecond() });
+            inventory.AddItem(new ItemStack() { item = resourceNode.GetResource(), amount = resourceNode.GetResourcesPerSecond() });
             timer = 1;
         }
     }

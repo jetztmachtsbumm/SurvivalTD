@@ -2,27 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Container : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
 
-    [SerializeField] private Transform containerUI;
     [SerializeField] private int invHeight = 5;
     [SerializeField] private int invWidth = 10;
     [SerializeField] private int startHeight = 120;
     [SerializeField] private int startWidth = -270;
     [SerializeField] private int offset = 60;
 
+    private Transform inventoryUI;
     private GameObject inventoryCell;
-    private List<ContainerCell> inventoryCells;
+    private List<InventoryCell> inventoryCells;
     private Transform containerUITransform;
 
     protected virtual void Awake()
     {
+        inventoryUI = GameObject.Find("Canvas").transform.Find("InventoryUI");
         inventoryCell = Resources.Load<GameObject>("InventoryCell");
-        inventoryCells = new List<ContainerCell>();
+        inventoryCells = new List<InventoryCell>();
 
         Transform containerTransform = new GameObject(transform.name + " Container").transform;
-        containerTransform.SetParent(containerUI);
+        containerTransform.SetParent(inventoryUI);
         containerTransform.transform.localPosition = Vector3.zero;
 
         for (int h = 0; h < invHeight; h++)
@@ -34,7 +35,7 @@ public abstract class Container : MonoBehaviour
 
                 rectTransform.anchoredPosition = new Vector2(startWidth + (offset * w), startHeight - (offset * h));
 
-                inventoryCells.Add(cell.GetComponent<ContainerCell>());
+                inventoryCells.Add(cell.GetComponent<InventoryCell>());
             }
         }
 
@@ -44,7 +45,7 @@ public abstract class Container : MonoBehaviour
 
     public void AddItem(ItemStack itemStack)
     {
-        foreach (ContainerCell cell in inventoryCells)
+        foreach (InventoryCell cell in inventoryCells)
         {
             if (cell.GetItemStack() == null) continue;
 
@@ -56,7 +57,7 @@ public abstract class Container : MonoBehaviour
             }
         }
 
-        foreach (ContainerCell cell in inventoryCells)
+        foreach (InventoryCell cell in inventoryCells)
         {
             if (cell.GetItemStack() == null)
             {
@@ -69,7 +70,7 @@ public abstract class Container : MonoBehaviour
 
     public void RemoveItem(ItemStack itemStack)
     {
-        foreach (ContainerCell cell in inventoryCells)
+        foreach (InventoryCell cell in inventoryCells)
         {
             if (cell.GetItemStack() == null) continue;
 
@@ -91,7 +92,7 @@ public abstract class Container : MonoBehaviour
     public ItemStack[] GetAllItems()
     {
         List<ItemStack> items = new List<ItemStack>();
-        foreach (ContainerCell cell in inventoryCells)
+        foreach (InventoryCell cell in inventoryCells)
         {
             if (cell.GetItemStack() != null)
             {
@@ -106,7 +107,7 @@ public abstract class Container : MonoBehaviour
     {
         containerUITransform.gameObject.SetActive(!containerUITransform.gameObject.activeInHierarchy);
         on = containerUITransform.gameObject.activeInHierarchy;
-        containerUI.Find("Background").gameObject.SetActive(on);
+        inventoryUI.Find("Background").gameObject.SetActive(on);
     }
 
 }
