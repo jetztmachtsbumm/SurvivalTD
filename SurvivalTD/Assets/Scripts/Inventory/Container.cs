@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Container : MonoBehaviour
 {
 
+    [SerializeField] private Transform containerUI;
     [SerializeField] private int invHeight = 5;
     [SerializeField] private int invWidth = 10;
     [SerializeField] private int startHeight = 120;
@@ -13,17 +14,22 @@ public abstract class Container : MonoBehaviour
 
     private GameObject inventoryCell;
     private List<ContainerCell> inventoryCells;
+    private Transform containerUITransform;
 
     protected virtual void Awake()
     {
         inventoryCell = Resources.Load<GameObject>("InventoryCell");
         inventoryCells = new List<ContainerCell>();
 
+        Transform containerTransform = new GameObject(transform.name + " Container").transform;
+        containerTransform.SetParent(containerUI);
+        containerTransform.transform.localPosition = Vector3.zero;
+
         for (int h = 0; h < invHeight; h++)
         {
             for (int w = 0; w < invWidth; w++)
             {
-                GameObject cell = Instantiate(inventoryCell, transform);
+                GameObject cell = Instantiate(inventoryCell, containerTransform);
                 RectTransform rectTransform = cell.GetComponent<RectTransform>();
 
                 rectTransform.anchoredPosition = new Vector2(startWidth + (offset * w), startHeight - (offset * h));
@@ -32,7 +38,8 @@ public abstract class Container : MonoBehaviour
             }
         }
 
-        gameObject.SetActive(false);
+        containerUITransform = containerTransform;
+        containerTransform.gameObject.SetActive(false);
     }
 
     public void AddItem(ItemStack itemStack)
@@ -93,6 +100,13 @@ public abstract class Container : MonoBehaviour
         }
 
         return items.ToArray();
+    }
+
+    public void ToggleUI(out bool on)
+    {
+        containerUITransform.gameObject.SetActive(!containerUITransform.gameObject.activeInHierarchy);
+        on = containerUITransform.gameObject.activeInHierarchy;
+        containerUI.Find("Background").gameObject.SetActive(on);
     }
 
 }
