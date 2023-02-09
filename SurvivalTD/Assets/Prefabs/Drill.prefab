@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 2643044919919575503}
   - component: {fileID: 5503750436058091197}
   - component: {fileID: 4645759862283280}
+  - component: {fileID: 7521357053976952331}
   m_Layer: 0
   m_Name: Drill
   m_TagString: Untagged
@@ -147,12 +148,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b623179de5760c94abd42a43555921b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  containerUI: {fileID: 0}
   invHeight: 5
   invWidth: 10
   startHeight: 120
   startWidth: -270
   offset: 60
+--- !u!65 &7521357053976952331
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451494497631165301}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6200845, y: 1.6602514, z: 2.615318}
+  m_Center: {x: -0.06963253, y: 0.68300486, z: 0.14656484}
 --- !u!1 &6434502540512521952
 GameObject:
   m_ObjectHideFlags: 0

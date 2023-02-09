@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrillBuilding : BaseBuilding
+public class DrillBuilding : BaseBuilding, IInteractable
 {
 
     private Inventory inventory;
@@ -40,6 +40,11 @@ public class DrillBuilding : BaseBuilding
 
         error = "";
         return true;
+    }
+
+    public void OnInteraction()
+    {
+        inventory.ToggleUI(out bool on);
     }
 
 }

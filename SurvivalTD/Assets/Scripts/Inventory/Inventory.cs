@@ -5,6 +5,8 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
 
+    public static Inventory activeInventory { get; private set; }
+
     [SerializeField] private int invHeight = 5;
     [SerializeField] private int invWidth = 10;
     [SerializeField] private int startHeight = 120;
@@ -107,7 +109,22 @@ public class Inventory : MonoBehaviour
     {
         containerUITransform.gameObject.SetActive(!containerUITransform.gameObject.activeInHierarchy);
         on = containerUITransform.gameObject.activeInHierarchy;
-        inventoryUI.Find("Background").gameObject.SetActive(on);
+
+        if (on)
+        {
+            activeInventory?.ToggleUI(out bool ingored);
+            inventoryUI.Find("Background").gameObject.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            activeInventory = this;
+        }
+        else
+        {
+            inventoryUI.Find("Background").gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            activeInventory = null;
+        }
     }
 
 }
