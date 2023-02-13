@@ -113,7 +113,13 @@ public class Inventory : MonoBehaviour
         if (on)
         {
             activeInventory?.ToggleUI(out bool ingored);
-            inventoryUI.Find("Background").gameObject.SetActive(true);
+            GameObject background = inventoryUI.Find("Background").gameObject;
+
+            RectTransform rectTransform = background.GetComponent<RectTransform>();
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 55 + ((invWidth - 1) * 60));
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 55 + ((invHeight - 1) * 60));
+            background.SetActive(true);
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             activeInventory = this;

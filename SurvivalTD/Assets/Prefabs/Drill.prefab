@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b623179de5760c94abd42a43555921b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invHeight: 5
-  invWidth: 10
+  invHeight: 2
+  invWidth: 4
   startHeight: 120
   startWidth: -270
   offset: 60
