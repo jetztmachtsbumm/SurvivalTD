@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrillBuilding : BaseBuilding, IInteractable
+public class DrillBuilding : InventoryBuilding
 {
 
-    private Inventory inventory;
     private ResourceNode resourceNode;
     private float timer;
-
-    private void Awake()
-    {
-        inventory = GetComponent<Inventory>();
-    }
 
     private void Start()
     {
@@ -25,7 +19,7 @@ public class DrillBuilding : BaseBuilding, IInteractable
         timer -= Time.deltaTime;
         if(timer <= 0)
         {
-            inventory.AddItem(new ItemStack() { item = resourceNode.GetResource(), amount = resourceNode.GetResourcesPerSecond() });
+            inventory.AddItem(new ItemStack() { item = resourceNode.GetResource(), amount = resourceNode.GetResourcesPerSecond() }, null);
             timer = 1;
         }
     }
@@ -42,9 +36,9 @@ public class DrillBuilding : BaseBuilding, IInteractable
         return true;
     }
 
-    public void OnInteraction()
+    public override string GetBuildingName()
     {
-        
+        return "Drill";
     }
 
 }

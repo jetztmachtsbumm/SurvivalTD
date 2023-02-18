@@ -10,6 +10,7 @@ public class BuildMode : MonoBehaviour
 
     [SerializeField] private BuildingSO selectedBuilding;
     [SerializeField] private Transform buildingGhost;
+    [SerializeField] private Transform buildingInventoryUI;
     [SerializeField] private GameObject errorMessage;
 
     [ColorUsage(true, true)]
@@ -118,7 +119,7 @@ public class BuildMode : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            BuildingConstruction.Create(LevelGrid.Instance.GetWorldPosition(hitGridPosition), buildingGhost.transform.localRotation, selectedBuilding);
+            BuildingConstruction.Create(LevelGrid.Instance.GetWorldPosition(hitGridPosition), buildingGhost.transform.localRotation, selectedBuilding, buildingInventoryUI);
             LevelGrid.Instance.GetGridObject(hitGridPosition).SetBuilding(selectedBuilding);
             PlayerInventory.Instance.SpendItems(selectedBuilding.constructionCost);
         }

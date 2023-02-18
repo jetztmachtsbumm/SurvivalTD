@@ -2,24 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public abstract class Inventory : MonoBehaviour
 {
 
-    [SerializeField] private int slotCount;
+    public static bool isAnyInventoryOn { get; private set; }
 
-    private Transform inventoryUI;
+    [SerializeField] private int slotCount;
+    [SerializeField] protected Transform inventoryUI;
+
     private GameObject inventoryCell;
     private List<ItemStack> items;
     private List<InventorySlot> slots;
 
     protected virtual void Awake()
     {
-        inventoryUI = GameObject.Find("Canvas").transform.Find("InventoryUI");
-        inventoryCell = Resources.Load<GameObject>("InventoryCell");
+        inventoryCell = Resources.Load<GameObject>("InventorySlot");
         items = new List<ItemStack>();
     }
 
-    public void AddItem(ItemStack itemStack)
+    public void AddItem(ItemStack itemStack, InventorySlot slot)
     {
         foreach(ItemStack stack in items)
         {
@@ -33,7 +34,22 @@ public class Inventory : MonoBehaviour
 
         items.Add(itemStack);
 
-        UpdateSlots(itemStack);
+        if (slot == null)
+        {
+            UpdateSlots(itemStack);
+        }
+        else
+        {
+            foreach(InventorySlot inventorySlot in slots)
+            {
+                if(inventorySlot == slot)
+                {
+                    inventorySlot.SetItemStack(itemStack);
+                    inventorySlot.UpdateVisuals();
+                    return;
+                }
+            }
+        }
     }
 
     public void RemoveItem(ItemStack itemStack)
@@ -61,15 +77,23 @@ public class Inventory : MonoBehaviour
         if (on)
         {
             SetupUI();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
             inventoryUI.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
+
+        isAnyInventoryOn = on;
     }
 
     private void UpdateSlots(ItemStack itemStack)
     {
+        if(slots == null) return;
+
         foreach (InventorySlot slot in slots)
         {
             if (slot.GetItemStack()?.item.name == itemStack.item.name)
@@ -108,7 +132,9 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slotCount; i++)
         {
-            slots.Add(Instantiate(inventoryCell, inventoryUI.Find("Scroll").Find("Panel")).GetComponent<InventorySlot>());
+            InventorySlot slot = Instantiate(inventoryCell, inventoryUI.Find("Scroll").Find("Panel")).GetComponent<InventorySlot>();
+            slot.SetInventory(this);
+            slots.Add(slot);
         }
 
         foreach(ItemStack itemStack in items)

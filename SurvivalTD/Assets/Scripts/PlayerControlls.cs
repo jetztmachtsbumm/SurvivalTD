@@ -20,7 +20,7 @@ public class PlayerControlls : MonoBehaviour
     private void Update()
     {
         HandleInventory();
-        if (!inventoryOn)
+        if (!inventoryOn && !Inventory.isAnyInventoryOn)
         {
             HandleMovement();
             HandleRotation();
@@ -78,16 +78,15 @@ public class PlayerControlls : MonoBehaviour
     private void InventoryOn()
     {
         PlayerInventory.Instance.ToggleUI(true);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         inventoryOn = true;
     }
 
     private void InventoryOff()
     {
-        PlayerInventory.Instance.ToggleUI(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        foreach(Inventory inventory in FindObjectsOfType<Inventory>())
+        {
+            inventory.ToggleUI(false);
+        }
         inventoryOn = false;
     }
 

@@ -11,7 +11,7 @@ public class Testing : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            PlayerInventory.Instance.AddItem(new ItemStack { item = item, amount = 1 });
+            PlayerInventory.Instance.AddItem(new ItemStack { item = item, amount = 1 }, null);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
