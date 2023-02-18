@@ -96,7 +96,7 @@ public class BuildMode : MonoBehaviour
             return;
         }
 
-        if (!selectedBuilding.constructionCost.CanAfford(PlayerInventory.Instance.GetAllItems()))
+        if (!selectedBuilding.constructionCost.CanAfford(PlayerInventory.Instance.GetItems().ToArray()))
         {
             material.SetColor("_MainColor", invalidColor); errorMessage.SetActive(true);
             errorMessage.GetComponentInChildren<TextMeshProUGUI>().text = "Cannot afford!";

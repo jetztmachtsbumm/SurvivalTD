@@ -9,6 +9,7 @@ public class PlayerControlls : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
 
     private float xRotation = 0;
+    private bool inventoryOn;
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class PlayerControlls : MonoBehaviour
     private void Update()
     {
         HandleInventory();
-        if (Inventory.activeInventory == null)
+        if (!inventoryOn)
         {
             HandleMovement();
             HandleRotation();
@@ -59,16 +60,35 @@ public class PlayerControlls : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Tab))
         {
-            PlayerInventory.Instance.ToggleUI(out bool on);
-            return;
+            if (!inventoryOn)
+            {
+                InventoryOn();
+            }
+            else
+            {
+                InventoryOff();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Inventory.activeInventory != null)
-            {
-                Inventory.activeInventory.ToggleUI(out bool on);
-            }
+            InventoryOff();
         }
+    }
+
+    private void InventoryOn()
+    {
+        PlayerInventory.Instance.ToggleUI(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        inventoryOn = true;
+    }
+
+    private void InventoryOff()
+    {
+        PlayerInventory.Instance.ToggleUI(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        inventoryOn = false;
     }
 
 }

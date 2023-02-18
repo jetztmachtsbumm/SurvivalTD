@@ -5,132 +5,128 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
 
-    public static Inventory activeInventory { get; private set; }
-
-    [SerializeField] private int invHeight = 5;
-    [SerializeField] private int invWidth = 10;
-    [SerializeField] private int startHeight = 120;
-    [SerializeField] private int startWidth = -270;
-    [SerializeField] private int offset = 60;
+    [SerializeField] private int slotCount;
 
     private Transform inventoryUI;
     private GameObject inventoryCell;
-    private List<InventoryCell> inventoryCells;
-    private Transform containerUITransform;
+    private List<ItemStack> items;
+    private List<InventorySlot> slots;
 
     protected virtual void Awake()
     {
         inventoryUI = GameObject.Find("Canvas").transform.Find("InventoryUI");
         inventoryCell = Resources.Load<GameObject>("InventoryCell");
-        inventoryCells = new List<InventoryCell>();
-
-        Transform containerTransform = new GameObject(transform.name + " Container").transform;
-        containerTransform.SetParent(inventoryUI);
-        containerTransform.transform.localPosition = Vector3.zero;
-
-        for (int h = 0; h < invHeight; h++)
-        {
-            for (int w = 0; w < invWidth; w++)
-            {
-                GameObject cell = Instantiate(inventoryCell, containerTransform);
-                RectTransform rectTransform = cell.GetComponent<RectTransform>();
-
-                rectTransform.anchoredPosition = new Vector2(startWidth + (offset * w), startHeight - (offset * h));
-
-                inventoryCells.Add(cell.GetComponent<InventoryCell>());
-            }
-        }
-
-        containerUITransform = containerTransform;
-        containerTransform.gameObject.SetActive(false);
+        items = new List<ItemStack>();
     }
 
     public void AddItem(ItemStack itemStack)
     {
-        foreach (InventoryCell cell in inventoryCells)
+        foreach(ItemStack stack in items)
         {
-            if (cell.GetItemStack() == null) continue;
-
-            if (cell.GetItemStack().item == itemStack.item)
+            if(itemStack.item.name == stack.item.name)
             {
-                cell.GetItemStack().amount += itemStack.amount;
-                cell.UpdateVisuals();
+                stack.amount += itemStack.amount;
+                UpdateSlots(stack);
                 return;
             }
         }
 
-        foreach (InventoryCell cell in inventoryCells)
-        {
-            if (cell.GetItemStack() == null)
-            {
-                cell.SetItemStack(itemStack);
-                cell.UpdateVisuals();
-                return;
-            }
-        }
+        items.Add(itemStack);
+
+        UpdateSlots(itemStack);
     }
 
     public void RemoveItem(ItemStack itemStack)
     {
-        foreach (InventoryCell cell in inventoryCells)
+        foreach(ItemStack stack in items)
         {
-            if (cell.GetItemStack() == null) continue;
-
-            if (cell.GetItemStack().item == itemStack.item)
+            if (itemStack.item.name == stack.item.name)
             {
-                cell.GetItemStack().amount -= itemStack.amount;
-
-                if (cell.GetItemStack().amount <= 0)
+                stack.amount -= itemStack.amount;
+                if(stack.amount <= 0)
                 {
-                    cell.SetItemStack(null);
+                    items.Remove(stack);
+                    UpdateSlots(stack);
+                    return;
                 }
 
-                cell.UpdateVisuals();
+                UpdateSlots(stack);
                 return;
             }
         }
     }
 
-    public ItemStack[] GetAllItems()
+    public void ToggleUI(bool on)
     {
-        List<ItemStack> items = new List<ItemStack>();
-        foreach (InventoryCell cell in inventoryCells)
-        {
-            if (cell.GetItemStack() != null)
-            {
-                items.Add(cell.GetItemStack());
-            }
-        }
-
-        return items.ToArray();
-    }
-
-    public void ToggleUI(out bool on)
-    {
-        containerUITransform.gameObject.SetActive(!containerUITransform.gameObject.activeInHierarchy);
-        on = containerUITransform.gameObject.activeInHierarchy;
-
         if (on)
         {
-            activeInventory?.ToggleUI(out bool ingored);
-            GameObject background = inventoryUI.Find("Background").gameObject;
-
-            RectTransform rectTransform = background.GetComponent<RectTransform>();
-            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 55 + ((invWidth - 1) * 60));
-            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 55 + ((invHeight - 1) * 60));
-            background.SetActive(true);
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            activeInventory = this;
+            SetupUI();
         }
         else
         {
-            inventoryUI.Find("Background").gameObject.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            activeInventory = null;
+            inventoryUI.gameObject.SetActive(false);
         }
+    }
+
+    private void UpdateSlots(ItemStack itemStack)
+    {
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot.GetItemStack()?.item.name == itemStack.item.name)
+            {
+                if(itemStack.amount <= 0)
+                {
+                    slot.SetItemStack(null);
+                    slot.UpdateVisuals();
+                    return;
+                }
+                slot.GetItemStack().amount = itemStack.amount;
+                slot.UpdateVisuals();
+                return;
+            }
+        }
+
+        foreach(InventorySlot slot in slots)
+        {
+            if(slot.GetItemStack() == null)
+            {
+                slot.SetItemStack(itemStack);
+                slot.UpdateVisuals();
+                return;
+            }
+        }
+    }
+
+    private void SetupUI()
+    {
+        foreach(Transform transform in inventoryUI.Find("Scroll").Find("Panel").GetComponentsInChildren<Transform>())
+        {
+            if(transform.name != "Panel") Destroy(transform.gameObject);
+        }
+
+        slots = new List<InventorySlot>();
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            slots.Add(Instantiate(inventoryCell, inventoryUI.Find("Scroll").Find("Panel")).GetComponent<InventorySlot>());
+        }
+
+        foreach(ItemStack itemStack in items)
+        {
+            UpdateSlots(itemStack);
+        }
+
+        inventoryUI.gameObject.SetActive(true);
+    }
+
+    public List<ItemStack> GetItems()
+    {
+        return items;
+    }
+
+    public List<InventorySlot> GetSlots()
+    {
+        return slots;
     }
 
 }

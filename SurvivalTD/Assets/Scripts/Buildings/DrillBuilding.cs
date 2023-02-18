@@ -44,7 +44,7 @@ public class DrillBuilding : BaseBuilding, IInteractable
 
     public void OnInteraction()
     {
-        inventory.ToggleUI(out bool on);
+        
     }
 
 }
