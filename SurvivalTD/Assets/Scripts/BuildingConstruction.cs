@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildingConstruction : MonoBehaviour
 {
 
-    public static void Create(Vector3 position, Quaternion rotation, BuildingSO constructedBuilding)
+    public static void Create(Vector3 position, Quaternion rotation, BuildingSO constructedBuilding, Transform buildingInventoryUI)
     {
         GameObject construction = Instantiate(Resources.Load<GameObject>("BuildingConstruction"));
 
@@ -19,12 +19,13 @@ public class BuildingConstruction : MonoBehaviour
 
         meshRenderer.material.SetFloat("_Dissolve", 1f);
 
-        construction.GetComponent<BuildingConstruction>().Setup(constructedBuilding);
+        construction.GetComponent<BuildingConstruction>().Setup(constructedBuilding, buildingInventoryUI);
     }
 
-    private BuildingSO constructedBuilding;
-    private float constructionTimer;
+    private BuildingSO constructedBuilding; 
+    private float constructionTimer;        
     private Material constructionMaterial;
+    private Transform buildingInventoryUI;
 
     private void Awake()
     {
@@ -37,14 +38,16 @@ public class BuildingConstruction : MonoBehaviour
         constructionMaterial.SetFloat("_Dissolve", GetConstructionTimerNormalized());
         if(constructionTimer <= 0)
         {
-            Instantiate(constructedBuilding.prefab, transform.position, transform.rotation);
+            Transform building = Instantiate(constructedBuilding.prefab, transform.position, transform.rotation);
+            building.GetComponent<BuildingInventory>().SetBuildingInventoryUI(buildingInventoryUI);
             Destroy(gameObject);
         }
     }
 
-    private void Setup(BuildingSO constructedBuilding)
+    private void Setup(BuildingSO constructedBuilding, Transform buildingInventoryUI)
     {
         this.constructedBuilding = constructedBuilding;
+        this.buildingInventoryUI = buildingInventoryUI;
         constructionTimer = constructedBuilding.timeToConstruct;
     }
 

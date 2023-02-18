@@ -22,6 +22,11 @@ public class GridObject
         return building;
     }
 
+    public ResourceNode GetResourceNode()
+    {
+        return resourceNode;
+    }
+
     public void SetBuilding(BuildingSO building)
     {
         this.building = building;
@@ -38,7 +43,6 @@ public class GridObject
     public void SetResourceNode(ResourceNode resourceNode)
     {
         this.resourceNode = resourceNode;
-        isOccupied = true;
     }
 
     public bool IsOccupied()

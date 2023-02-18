@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 4977124656093721904}
   - component: {fileID: 2806761028933843495}
   m_Layer: 5
-  m_Name: InventoryCell
+  m_Name: InventorySlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -264,6 +264,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252967575cdd55d42a34e79a5a9a2dbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedVisual: {fileID: 4798322365510965582}
+  contentImage: {fileID: 3022994062624115256}
+  amountText: {fileID: 8559985669424985458}
 --- !u!1 &4798322365510965582
 GameObject:
   m_ObjectHideFlags: 0

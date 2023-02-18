@@ -7,6 +7,8 @@ public static class UtilsClass
     
     public static Mesh CombineMeshes(GameObject gameObject)
     {
+        gameObject.transform.position = Vector3.zero;
+
         MeshFilter[] allMesheFilters = gameObject.GetComponentsInChildren<MeshFilter>();
 
         CombineInstance[] combineInstance = new CombineInstance[allMesheFilters.Length];

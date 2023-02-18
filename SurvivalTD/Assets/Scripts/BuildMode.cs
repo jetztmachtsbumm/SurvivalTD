@@ -10,6 +10,7 @@ public class BuildMode : MonoBehaviour
 
     [SerializeField] private BuildingSO selectedBuilding;
     [SerializeField] private Transform buildingGhost;
+    [SerializeField] private Transform buildingInventoryUI;
     [SerializeField] private GameObject errorMessage;
 
     [ColorUsage(true, true)]
@@ -96,10 +97,19 @@ public class BuildMode : MonoBehaviour
             return;
         }
 
-        if (!selectedBuilding.constructionCost.CanAfford(Inventory.Instance.GetAllItems()))
+        if (!selectedBuilding.constructionCost.CanAfford(PlayerInventory.Instance.GetItems().ToArray()))
         {
             material.SetColor("_MainColor", invalidColor); errorMessage.SetActive(true);
             errorMessage.GetComponentInChildren<TextMeshProUGUI>().text = "Cannot afford!";
+            return;
+        }
+
+        BaseBuilding baseBuilding = selectedBuilding.prefab.GetComponent<BaseBuilding>();
+
+        if(!baseBuilding.IsBuildingConditionMet(hitGridPosition, out string error))
+        {
+            material.SetColor("_MainColor", invalidColor); errorMessage.SetActive(true);
+            errorMessage.GetComponentInChildren<TextMeshProUGUI>().text = error;
             return;
         }
 
@@ -109,9 +119,9 @@ public class BuildMode : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            BuildingConstruction.Create(LevelGrid.Instance.GetWorldPosition(hitGridPosition), buildingGhost.transform.localRotation, selectedBuilding);
+            BuildingConstruction.Create(LevelGrid.Instance.GetWorldPosition(hitGridPosition), buildingGhost.transform.localRotation, selectedBuilding, buildingInventoryUI);
             LevelGrid.Instance.GetGridObject(hitGridPosition).SetBuilding(selectedBuilding);
-            Inventory.Instance.SpendItems(selectedBuilding.constructionCost);
+            PlayerInventory.Instance.SpendItems(selectedBuilding.constructionCost);
         }
     }
 

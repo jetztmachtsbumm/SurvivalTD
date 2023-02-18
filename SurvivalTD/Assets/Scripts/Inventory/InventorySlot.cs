@@ -5,21 +5,15 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
+    [SerializeField] private GameObject selectedVisual;
+    [SerializeField] private Image contentImage;
+    [SerializeField] private TextMeshProUGUI amountText;
+
     private ItemStack itemStack;
-
-    private GameObject selectedVisual;
-    private Image contentImage;
-    private TextMeshProUGUI amountText;
-
-    private void Awake()
-    {
-        selectedVisual = transform.Find("Selected").gameObject;
-        contentImage = transform.Find("Content").GetComponent<Image>();
-        amountText = transform.Find("Amount").GetComponent<TextMeshProUGUI>();
-    }
+    private Inventory inventory;
 
     public void UpdateVisuals()
     {
@@ -52,8 +46,10 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             if (itemStack == null) return;
 
             MovingItem.Instance.SetItemStack(itemStack);
-            itemStack = null;
+            int amount = MovingItem.Instance.GetItemStack().amount;
+            inventory.RemoveItem(itemStack);
             MovingItem.Instance.gameObject.SetActive(true);
+            MovingItem.Instance.GetItemStack().amount = amount;
         }
         else
         {
@@ -68,10 +64,8 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 MovingItem.Instance.gameObject.SetActive(false);
             }
 
-            itemStack = movingItemStack;
+            inventory.AddItem(movingItemStack, this);
         }
-
-        UpdateVisuals();
     }
 
     public ItemStack GetItemStack()
@@ -82,6 +76,11 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void SetItemStack(ItemStack itemStack)
     {
         this.itemStack = itemStack;
+    }
+
+    public void SetInventory(Inventory inventory)
+    {
+        this.inventory = inventory;
     }
 
 }

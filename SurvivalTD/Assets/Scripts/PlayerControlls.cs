@@ -7,9 +7,9 @@ public class PlayerControlls : MonoBehaviour
 
     [SerializeField] private float movementSpeed;
     [SerializeField] private float mouseSensitivity;
-    [SerializeField] private GameObject inventory;
 
-    float xRotation = 0;
+    private float xRotation = 0;
+    private bool inventoryOn;
 
     private void Awake()
     {
@@ -19,7 +19,8 @@ public class PlayerControlls : MonoBehaviour
 
     private void Update()
     {
-        if (!HandleInventory())
+        HandleInventory();
+        if (!inventoryOn && !Inventory.isAnyInventoryOn)
         {
             HandleMovement();
             HandleRotation();
@@ -55,28 +56,38 @@ public class PlayerControlls : MonoBehaviour
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 
-    private bool HandleInventory()
+    private void HandleInventory()
     {
-        if (inventory.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Tab))
         {
-            if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I))
+            if (!inventoryOn)
             {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                inventory.SetActive(false);
+                InventoryOn();
             }
-            return true;
+            else
+            {
+                InventoryOff();
+            }
         }
-        else
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                inventory.SetActive(true);
-            }
-            return false;
+            InventoryOff();
         }
+    }
+
+    private void InventoryOn()
+    {
+        PlayerInventory.Instance.ToggleUI(true);
+        inventoryOn = true;
+    }
+
+    private void InventoryOff()
+    {
+        foreach(Inventory inventory in FindObjectsOfType<Inventory>())
+        {
+            inventory.ToggleUI(false);
+        }
+        inventoryOn = false;
     }
 
 }

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53c65c227fd71d44295427f6b1ab9a80, type: 3}
-  m_Name: TestBuilding
+  m_Name: Drill
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3920918488251817571, guid: fecfba4c440e0e949b491d1febb83b03, type: 3}
-  nameString: Test Building
+  prefab: {fileID: 2643044919919575503, guid: 80702d5a1e9e518409d095c83192b1d4, type: 3}
+  nameString: Drill
   constructionCost:
     cost:
     - item: {fileID: 11400000, guid: 04afa99a60b8fa14a94eb2ddd694a5e6, type: 2}
