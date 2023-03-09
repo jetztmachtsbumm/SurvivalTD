@@ -17,17 +17,17 @@ public class GridSystem
         this.cellSize = cellSize;
 
         gridObjects = new GridObject[width, height];
-        for(int x = 0; x < width; x++)
+        for (int x = 0; x < width; x++)
         {
-            for(int z = 0; z < height; z++)
+            for (int z = 0; z < height; z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
                 GridObject gridObject = new GridObject(this, gridPosition);
 
-                Collider[] colliderOnPosition = Physics.OverlapBox(GetWorldPosition(gridPosition), new Vector3(cellSize / 2, 10f, cellSize / 2));
-                foreach(Collider collider in colliderOnPosition)
+                Collider[] collidersOnPosition = Physics.OverlapBox(GetWorldPosition(gridPosition), new Vector3(cellSize / 2, 10f, cellSize / 2));
+                foreach (Collider collider in collidersOnPosition)
                 {
-                    if(collider.transform.TryGetComponent(out ResourceNode resourceNode))
+                    if (collider.transform.TryGetComponent(out ResourceNode resourceNode))
                     {
                         gridObject.SetResourceNode(resourceNode);
                         break;

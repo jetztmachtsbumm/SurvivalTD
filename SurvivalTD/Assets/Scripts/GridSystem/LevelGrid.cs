@@ -7,6 +7,10 @@ public class LevelGrid : MonoBehaviour
 
     public static LevelGrid Instance { get; private set; }
 
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    [SerializeField] private float cellSize;
+
     private GridSystem gridSystem;
 
     private void Awake()
@@ -18,7 +22,7 @@ public class LevelGrid : MonoBehaviour
         }
         Instance = this;
 
-        gridSystem = new GridSystem(100, 100, 2f);
+        gridSystem = new GridSystem(width, height, cellSize);
     }
 
     public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);
