@@ -11,7 +11,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private int height;
     [SerializeField] private float cellSize;
 
-    private GridSystem gridSystem;
+    private GridSystem<GridObject> gridSystem;
 
     private void Awake()
     {
@@ -22,7 +22,12 @@ public class LevelGrid : MonoBehaviour
         }
         Instance = this;
 
-        gridSystem = new GridSystem(width, height, cellSize);
+        gridSystem = new GridSystem<GridObject>(width, height, cellSize, (GridSystem<GridObject> g, GridPosition gridPosition) => new GridObject(g, gridPosition));
+    }
+
+    private void Start()
+    {
+        Pathfinding.Instance.Setup(width, height, cellSize);
     }
 
     public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);

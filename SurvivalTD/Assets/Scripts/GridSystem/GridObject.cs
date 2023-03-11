@@ -5,16 +5,25 @@ using UnityEngine;
 public class GridObject
 {
     
-    private GridSystem gridSystem;
+    private GridSystem<GridObject> gridSystem;
     private GridPosition gridPosition;
     private BuildingSO building;
     private ResourceNode resourceNode;
     private bool isOccupied;
 
-    public GridObject(GridSystem gridSystem, GridPosition gridPosition)
+    public GridObject(GridSystem<GridObject> gridSystem, GridPosition gridPosition)
     {
         this.gridSystem = gridSystem;
         this.gridPosition = gridPosition;
+        Collider[] collidersOnPosition = Physics.OverlapBox(gridSystem.GetWorldPosition(gridPosition), new Vector3(gridSystem.GetCellSize() / 2, 10f, gridSystem.GetCellSize() / 2));
+        foreach (Collider collider in collidersOnPosition)
+        {
+            if (collider.transform.TryGetComponent(out ResourceNode resourceNode))
+            {
+                SetResourceNode(resourceNode);
+                break;
+            }
+        }
     }
 
     public BuildingSO GetBuilding()

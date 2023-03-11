@@ -1,40 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridSystem
+public class GridSystem<TGridObject>
 {
 
     private int width;
     private int height;
     private float cellSize;
-    private GridObject[,] gridObjects;
+    private TGridObject[,] gridObjects;
 
-    public GridSystem(int width, int height, float cellSize)
+    public GridSystem(int width, int height, float cellSize, Func<GridSystem<TGridObject>, GridPosition, TGridObject> createGridObject)
     {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
 
-        gridObjects = new GridObject[width, height];
+        gridObjects = new TGridObject[width, height];
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
-                GridObject gridObject = new GridObject(this, gridPosition);
-
-                Collider[] collidersOnPosition = Physics.OverlapBox(GetWorldPosition(gridPosition), new Vector3(cellSize / 2, 10f, cellSize / 2));
-                foreach (Collider collider in collidersOnPosition)
-                {
-                    if (collider.transform.TryGetComponent(out ResourceNode resourceNode))
-                    {
-                        gridObject.SetResourceNode(resourceNode);
-                        break;
-                    }
-                }
-
-                gridObjects[x, z] = gridObject;
+                gridObjects[x, z] = createGridObject(this, gridPosition);
             }
         }
     }
@@ -49,7 +38,7 @@ public class GridSystem
         return new GridPosition(Mathf.RoundToInt(worldPosition.x / cellSize), Mathf.RoundToInt(worldPosition.z / cellSize));
     }
 
-    public GridObject GetGridObject(GridPosition gridPosition)
+    public TGridObject GetGridObject(GridPosition gridPosition)
     {
         return gridObjects[gridPosition.x, gridPosition.z];
     }
@@ -64,7 +53,7 @@ public class GridSystem
 
     public bool IsGridPositionOccupied(GridPosition gridPosition)
     {
-        return GetGridObject(gridPosition).IsOccupied();
+        return (GetGridObject(gridPosition) as GridObject).IsOccupied();
     }
 
     public int GetWidth()
@@ -75,6 +64,11 @@ public class GridSystem
     public int GetHeight()
     {
         return height;
+    }
+
+    public float GetCellSize()
+    {
+        return cellSize;
     }
 
 }
