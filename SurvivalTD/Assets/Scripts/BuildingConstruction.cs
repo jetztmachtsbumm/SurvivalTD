@@ -13,7 +13,7 @@ public class BuildingConstruction : MonoBehaviour
         construction.transform.rotation = rotation;
 
         MeshFilter meshFilter = construction.GetComponent<MeshFilter>();
-        meshFilter.mesh = UtilsClass.CombineMeshes(constructedBuilding.prefab.gameObject);
+        meshFilter.mesh = Utils.CombineMeshes(constructedBuilding.prefab.gameObject);
 
         MeshRenderer meshRenderer = construction.GetComponent<MeshRenderer>();
 

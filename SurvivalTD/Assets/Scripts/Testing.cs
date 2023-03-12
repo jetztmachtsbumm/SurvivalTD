@@ -6,6 +6,7 @@ public class Testing : MonoBehaviour
 {
 
     [SerializeField] private ItemSO item;
+    [SerializeField] private HealthSystem healthSystem;
 
     private void Update()
     {
@@ -17,6 +18,11 @@ public class Testing : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerInventory.Instance.RemoveItem(new ItemStack { item = item, amount = 1 });
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            healthSystem.Damage(37);
         }
     }
 

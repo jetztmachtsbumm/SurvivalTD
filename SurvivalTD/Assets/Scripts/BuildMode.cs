@@ -39,7 +39,7 @@ public class BuildMode : MonoBehaviour
 
     public void UpdateBuildingGhostMesh()
     {
-        buildingGhost.GetComponent<MeshFilter>().mesh = UtilsClass.CombineMeshes(selectedBuilding.prefab.gameObject);
+        buildingGhost.GetComponent<MeshFilter>().mesh = Utils.CombineMeshes(selectedBuilding.prefab.gameObject);
         buildingGhost.gameObject.SetActive(true);
     }
 

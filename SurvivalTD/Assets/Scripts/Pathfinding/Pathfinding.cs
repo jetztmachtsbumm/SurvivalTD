@@ -40,7 +40,6 @@ public class Pathfinding : MonoBehaviour
                 {
                     if (1 << coll.gameObject.layer == obstaclesLayerMask)
                     {
-                        Debug.Log("Obstacle");
                         GetNode(x, z).SetIsWalkable(false);
                         break;
                     }
