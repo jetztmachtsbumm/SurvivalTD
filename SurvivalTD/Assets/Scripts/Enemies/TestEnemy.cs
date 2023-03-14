@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemy : MonoBehaviour
+public class TestEnemy : BaseEnemy
 {
 
     [SerializeField] private Transform targetPosition;
@@ -25,7 +25,7 @@ public class TestEnemy : MonoBehaviour
 
         if(Vector3.Distance(transform.position, LevelGrid.Instance.GetWorldPosition(path[0])) > stoppingDistance)
         {
-            float moveSpeed = 5f;
+            float moveSpeed = 8f;
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
             float rotationSpeed = 20f;
