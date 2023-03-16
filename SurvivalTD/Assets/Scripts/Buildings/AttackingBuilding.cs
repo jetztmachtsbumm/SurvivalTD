@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class AttackingBuilding : BaseBuilding
 {
 
+    [SerializeField] private Transform shootPoint;
     [SerializeField] private float range;
     [SerializeField] private float shotsPerSecond;
     [SerializeField] private int damagePerHit;
@@ -23,7 +24,15 @@ public abstract class AttackingBuilding : BaseBuilding
         }
         else
         {
-            if(Vector3.Distance(transform.position, target.transform.position) > range)
+            if(Vector3.Distance(shootPoint.position, target.transform.position) > range)
+            {
+                ResetTarget();
+                return;
+            }
+
+            Physics.Raycast(shootPoint.position, target.transform.position - shootPoint.position, out RaycastHit hit);
+
+            if(!ReferenceEquals(hit.transform, target.transform))
             {
                 ResetTarget();
                 return;
@@ -57,11 +66,16 @@ public abstract class AttackingBuilding : BaseBuilding
     {
         List<BaseEnemy> enemiesInRange = new List<BaseEnemy>();
         //Get all enemies, that are within the attack range of the building
-        foreach (Collider coll in Physics.OverlapSphere(transform.position, range))
+        foreach (Collider coll in Physics.OverlapSphere(shootPoint.position, range))
         {
             if (coll.TryGetComponent(out BaseEnemy enemy))
             {
-                enemiesInRange.Add(enemy);
+                Physics.Raycast(shootPoint.position, coll.transform.position - shootPoint.position, out RaycastHit hit);
+                Debug.DrawRay(shootPoint.position, coll.transform.position - shootPoint.position);
+                if (hit.transform.TryGetComponent(out BaseEnemy baseEnemy))
+                {
+                    enemiesInRange.Add(enemy);
+                }
             }
         }
 
@@ -75,7 +89,7 @@ public abstract class AttackingBuilding : BaseBuilding
         float nearestDistance = float.MaxValue;
         foreach (BaseEnemy enemy in enemiesInRange)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            float distanceToEnemy = Vector3.Distance(shootPoint.position, enemy.transform.position);
             if (distanceToEnemy < nearestDistance)
             {
                 nearestDistance = distanceToEnemy;
