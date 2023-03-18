@@ -10,6 +10,8 @@ public class HealthSystem : MonoBehaviour
     public event EventHandler OnHealthZero;
 
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] private float healthBarOffset;
+    [SerializeField] private float healthBarSize = 1f;
 
     private int health;
     private Image healthBarImage;
@@ -17,7 +19,10 @@ public class HealthSystem : MonoBehaviour
     private void Awake()
     {
         health = maxHealth;
-        healthBarImage = transform.Find("Bar").GetComponent<Image>();
+        Transform healthSystemObject = Instantiate(Resources.Load<Transform>("HealthSystem"), transform);
+        healthSystemObject.transform.position += Vector3.up * healthBarOffset;
+        healthSystemObject.GetComponent<RectTransform>().localScale = new Vector3(healthBarSize, 1, 1);
+        healthBarImage = healthSystemObject.Find("Bar").GetComponent<Image>();
     }
 
     public void Damage(int damage)

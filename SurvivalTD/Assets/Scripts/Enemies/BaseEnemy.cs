@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(HealthSystem))]
 public abstract class BaseEnemy : MonoBehaviour
 {
 
     public event EventHandler OnDeath;
 
-    [SerializeField] private HealthSystem healthSystem;
+    private HealthSystem healthSystem;
 
     private void Awake()
     {
+        healthSystem = GetComponent<HealthSystem>();
         healthSystem.OnHealthZero += HealthSystem_OnHealthZero;
     }
 

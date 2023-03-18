@@ -102,7 +102,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6357317248463766743}
   - component: {fileID: 5711151906451852255}
-  - component: {fileID: 8196380589262382669}
   - component: {fileID: 7168156745827304650}
   m_Layer: 0
   m_Name: HealthSystem
@@ -155,19 +154,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &8196380589262382669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4694019762715593819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfd985914e1471c468e830684c8c9756, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &7168156745827304650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed2d356abcfd78b458d1f74c43202a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invert: 0
 --- !u!1 &7836915828019315839
 GameObject:
   m_ObjectHideFlags: 0
