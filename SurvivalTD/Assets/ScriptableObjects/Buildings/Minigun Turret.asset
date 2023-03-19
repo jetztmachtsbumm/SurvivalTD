@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c65c227fd71d44295427f6b1ab9a80, type: 3}
+  m_Name: Minigun Turret
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 316381929646429780, guid: 15adbb7531521ce40898e7349ba528fb, type: 3}
+  nameString: Minigun Turret
+  constructionCost:
+    cost:
+    - item: {fileID: 11400000, guid: 4b9d2b044997a76419c3eb227fb6128f, type: 2}
+      amount: 1
+  timeToConstruct: 5

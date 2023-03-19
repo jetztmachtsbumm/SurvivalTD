@@ -7,8 +7,9 @@ public abstract class InventoryBuilding : BaseBuilding, IInteractable
 
     protected BuildingInventory inventory;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         inventory = GetComponent<BuildingInventory>();
     }
 

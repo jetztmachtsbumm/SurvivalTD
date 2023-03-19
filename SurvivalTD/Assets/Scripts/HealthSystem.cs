@@ -10,23 +10,26 @@ public class HealthSystem : MonoBehaviour
     public event EventHandler OnHealthZero;
 
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private float healthBarOffset;
+    [SerializeField] private float healthBarOffset = 1f;
     [SerializeField] private float healthBarSize = 1f;
 
+    private Transform healthSystemObject;
     private int health;
     private Image healthBarImage;
 
     private void Awake()
     {
         health = maxHealth;
-        Transform healthSystemObject = Instantiate(Resources.Load<Transform>("HealthSystem"), transform);
+        healthSystemObject = Instantiate(Resources.Load<Transform>("HealthSystem"), transform);
         healthSystemObject.transform.position += Vector3.up * healthBarOffset;
         healthSystemObject.GetComponent<RectTransform>().localScale = new Vector3(healthBarSize, 1, 1);
+        healthSystemObject.gameObject.SetActive(false);
         healthBarImage = healthSystemObject.Find("Bar").GetComponent<Image>();
     }
 
     public void Damage(int damage)
     {
+        healthSystemObject.gameObject.SetActive(true);
         if (damage < health)
         {
             health -= damage;

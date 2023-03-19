@@ -20,7 +20,7 @@ public class PlayerControlls : MonoBehaviour
     private void Update()
     {
         HandleInventory();
-        if (!inventoryOn && !Inventory.isAnyInventoryOn)
+        if (!Inventory.isAnyInventoryOn)
         {
             HandleMovement();
             HandleRotation();

@@ -14,8 +14,6 @@ public abstract class AttackingBuilding : BaseBuilding
     private bool attackingTarget;
     private Coroutine coroutine;
 
-    public override abstract bool IsBuildingConditionMet(GridPosition gridPosition, out string error);
-
     private void Update()
     {
         if(target == null)
