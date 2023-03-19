@@ -51,7 +51,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
         if (Vector3.Distance(transform.position, LevelGrid.Instance.GetWorldPosition(path[0])) > stoppingDistance)
         {
-            float moveSpeed = 20f;
+            float moveSpeed = 8f;
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
             float rotationSpeed = 20f;

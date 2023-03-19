@@ -16,6 +16,7 @@ public class HealthSystem : MonoBehaviour
     private Transform healthSystemObject;
     private int health;
     private Image healthBarImage;
+    private Gradient gradient;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class HealthSystem : MonoBehaviour
         healthSystemObject.GetComponent<RectTransform>().localScale = new Vector3(healthBarSize, 1, 1);
         healthSystemObject.gameObject.SetActive(false);
         healthBarImage = healthSystemObject.Find("Bar").GetComponent<Image>();
+        gradient = Resources.Load<HealthBarGradientHolder>("HealthBarGradient").gradient;
     }
 
     public void Damage(int damage)
@@ -34,11 +36,13 @@ public class HealthSystem : MonoBehaviour
         {
             health -= damage;
             healthBarImage.fillAmount = GetHealthPercentage();
+            healthBarImage.color = gradient.Evaluate(1 - GetHealthPercentage());
         }
         else
         {
             health = 0;
             healthBarImage.fillAmount = GetHealthPercentage();
+            healthBarImage.color = gradient.Evaluate(1 - GetHealthPercentage());
             OnHealthZero?.Invoke(this, EventArgs.Empty);
         }
     }
