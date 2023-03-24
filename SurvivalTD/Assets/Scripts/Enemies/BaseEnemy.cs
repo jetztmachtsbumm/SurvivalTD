@@ -23,8 +23,6 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.OnHealthZero += HealthSystem_OnHealthZero;
-        targetPosition = MainBuilding.Instance.transform;
-        path = Pathfinding.Instance.FindPath(LevelGrid.Instance.GetGridPosition(transform.position), LevelGrid.Instance.GetGridPosition(targetPosition.position));
         continueMoving = true;
     }
 
@@ -70,7 +68,15 @@ public abstract class BaseEnemy : MonoBehaviour
 
     private void LookForNewTargets()
     {
-        Transform nearestTarget = MainBuilding.Instance.transform;
+        Transform nearestTarget;
+        if (targetPosition == null)
+        {
+            nearestTarget = MainBuilding.Instance.transform;
+        }
+        else
+        {
+            nearestTarget = targetPosition;
+        }
 
         foreach(Collider coll in Physics.OverlapSphere(transform.position, targetingRange))
         {

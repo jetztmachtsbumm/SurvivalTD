@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
 
     [SerializeField] private float averageTimeBetweenPhases = 60 * 5;
 
@@ -27,11 +27,15 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (currentGamePhase == GamePhase.DEFENSE_PHASE) return;
+
         defensePhaseTimer -= Time.deltaTime;
 
         if(defensePhaseTimer <= 0)
         {
             SetCurrentGamePhase(GamePhase.DEFENSE_PHASE);
+            WaveManager.Instance.SetupNextWave();
+            defensePhaseTimer = averageTimeBetweenPhases;
         }
     }
 

@@ -14,6 +14,12 @@ public abstract class AttackingBuilding : BaseBuilding
     private bool attackingTarget;
     private Coroutine coroutine;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        GetHealthSystem().OnHealthZero += AttackingBuilding_OnHealthZero;
+    }
+
     private void Update()
     {
         if(target == null)
@@ -37,8 +43,12 @@ public abstract class AttackingBuilding : BaseBuilding
             }
 
             //TODO: Rotate towards enemy
+
             if (!attackingTarget)
             {
+                //Target sometimes null for unknown reason
+                if(target == null) return;
+
                 coroutine = StartCoroutine(AttackTarget());
                 target.OnDeath += Target_OnDeath;
                 attackingTarget = true;
@@ -55,9 +65,27 @@ public abstract class AttackingBuilding : BaseBuilding
         }
     }
 
+    private void AttackingBuilding_OnHealthZero(object sender, System.EventArgs e)
+    {
+        if(target != null)
+        {
+            target.OnDeath -= Target_OnDeath;
+        }
+    }
+
     private void Target_OnDeath(object sender, System.EventArgs e)
     {
-        ResetTarget();
+        //Target sometimes null for unknown reason
+        if(target != null)
+        {
+            target.OnDeath -= Target_OnDeath;
+        }
+
+        //Event is sometimes called after this gameobject got destroyed already
+        if (this != null)
+        {
+            ResetTarget();
+        }
     }
 
     private void SeekTarget()
@@ -101,7 +129,6 @@ public abstract class AttackingBuilding : BaseBuilding
     private void ResetTarget()
     {
         if(coroutine != null) StopCoroutine(coroutine);
-        target.OnDeath -= Target_OnDeath;
         attackingTarget = false;
         target = null;
         coroutine = null;
