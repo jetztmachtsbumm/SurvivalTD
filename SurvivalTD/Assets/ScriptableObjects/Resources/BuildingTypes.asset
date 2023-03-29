@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd22eefac85085e4bad44bde8aa869a0, type: 3}
-  m_Name: EnemyHolder
+  m_Script: {fileID: 11500000, guid: 0f48ef654e7462a469d68f0f0a881a39, type: 3}
+  m_Name: BuildingTypes
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 11400000, guid: 7fd3ed389811e91479ad6f79f4e1259e, type: 2}
-  - {fileID: 11400000, guid: ef9b09b9c1e49a44b93358e846fd6475, type: 2}
+  buildingTypes:
+  - {fileID: 11400000, guid: f40c08f66a42db1498d8dbb7da1da427, type: 2}
+  - {fileID: 11400000, guid: 3ad044004010db040af299fed44194d1, type: 2}

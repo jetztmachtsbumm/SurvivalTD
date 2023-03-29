@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 400
-  healthBarOffset: 1
+  healthBarOffset: 1.25
   healthBarSize: 2.5
 --- !u!114 &6378795498688433847
 MonoBehaviour:

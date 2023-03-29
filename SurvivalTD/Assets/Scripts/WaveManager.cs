@@ -42,7 +42,7 @@ public class WaveManager : MonoBehaviour
 
     private void SelectEnemiesToSpawn()
     {
-        List<EnemySO> sortedEnemies = new List<EnemySO>(Resources.Load<EnemyHolder>("EnemyHolder").enemies);
+        List<EnemySO> sortedEnemies = new List<EnemySO>(Resources.Load<EnemyHolder>("EnemyTypes").enemies);
         //Sort enemies by their difficulty score in descending order
         sortedEnemies.Sort((a, b) => b.difficultyScore.CompareTo(a.difficultyScore));
 

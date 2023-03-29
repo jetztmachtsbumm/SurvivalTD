@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Drill
   m_EditorClassIdentifier: 
   prefab: {fileID: 2643044919919575503, guid: 80702d5a1e9e518409d095c83192b1d4, type: 3}
+  uiTexture: {fileID: 21300000, guid: bf1f52e02f478b84ba47e944421ba9a5, type: 3}
   nameString: Drill
   constructionCost:
     cost:
     - item: {fileID: 11400000, guid: 04afa99a60b8fa14a94eb2ddd694a5e6, type: 2}
       amount: 1
   timeToConstruct: 3
+  buidlingMenuType: 2

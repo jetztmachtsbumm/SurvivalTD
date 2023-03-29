@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class BuildMode : MonoBehaviour
@@ -8,7 +10,7 @@ public class BuildMode : MonoBehaviour
 
     public static BuildMode Instance { get; private set; }
 
-    [SerializeField] private BuildingSO selectedBuilding;
+    [SerializeField] private Transform buildingSelectUI;
     [SerializeField] private Transform buildingGhost;
     [SerializeField] private Transform buildingInventoryUI;
     [SerializeField] private GameObject errorMessage;
@@ -18,7 +20,9 @@ public class BuildMode : MonoBehaviour
 
     [ColorUsage(true, true)]
     [SerializeField] private Color invalidColor;
-
+    
+    private BuildingSO selectedBuilding;
+    private bool inBuildingSelectUI = false;
     private bool inBuildMode = false;
 
     private void Awake()
@@ -29,6 +33,8 @@ public class BuildMode : MonoBehaviour
             Destroy(gameObject);
         }
         Instance = this;
+
+        CreateUI();
     }
 
     private void Update()
@@ -40,7 +46,6 @@ public class BuildMode : MonoBehaviour
     public void UpdateBuildingGhostMesh()
     {
         buildingGhost.GetComponent<MeshFilter>().mesh = Utils.CombineMeshes(selectedBuilding.prefab.gameObject);
-        buildingGhost.gameObject.SetActive(true);
     }
 
     private void HandleInput()
@@ -49,13 +54,12 @@ public class BuildMode : MonoBehaviour
         {
             if (inBuildMode)
             {
-                buildingGhost.gameObject.SetActive(false);
                 inBuildMode = false;
+                buildingGhost.gameObject.SetActive(false);
             }
             else
             {
-                UpdateBuildingGhostMesh();
-                inBuildMode = true;
+                ToggleBuildingSelectUI(!inBuildingSelectUI);
             }
         }
     }
@@ -123,6 +127,82 @@ public class BuildMode : MonoBehaviour
             LevelGrid.Instance.GetGridObject(hitGridPosition).SetBuilding(selectedBuilding);
             PlayerInventory.Instance.SpendItems(selectedBuilding.constructionCost);
         }
+    }
+
+    private void CreateUI()
+    {
+        foreach(BuildingSO building in Resources.Load<BuildingTypeHolder>("BuildingTypes").buildingTypes)
+        {
+            Transform template = Resources.Load<Transform>("BuildingSelectUIButton");
+            Transform uiElement;
+            switch (building.buidlingMenuType)
+            {
+                case BuildingSO.BuildingMenuType.DEFENSE:
+                    uiElement = Instantiate(template, buildingSelectUI.Find("DefenseBuildings"));
+                    uiElement.GetComponent<Image>().sprite = building.uiTexture;
+                    uiElement.GetComponent<Button>().onClick.AddListener(() => OnClickListener(building));
+                    break;
+
+                case BuildingSO.BuildingMenuType.HARVESTING:
+                    uiElement = Instantiate(template, buildingSelectUI.Find("HarvestingBuildings"));
+                    uiElement.GetComponent<Image>().sprite = building.uiTexture;
+                    uiElement.GetComponent<Button>().onClick.AddListener(() => OnClickListener(building));
+                    break;
+            }
+        }
+    }
+
+    private void OnClickListener(BuildingSO building)
+    {
+        selectedBuilding = building;
+        UpdateBuildingGhostMesh();
+        ToggleBuildingSelectUI(false);
+        inBuildMode = true;
+        buildingGhost.gameObject.SetActive(true);
+    }
+
+    private void ToggleBuildingSelectUI(bool on)
+    {
+        if (on)
+        {
+            inBuildingSelectUI = true;
+            PlayerControlls.Instance.ToggleControllsOff();
+        }
+        else
+        {
+            inBuildingSelectUI = false;
+            PlayerControlls.Instance.ToggleControllsOn();
+        }
+
+        buildingSelectUI.gameObject.SetActive(inBuildingSelectUI);
+        ActivateMenu("NONE");
+    }
+
+    public void ActivateMenu(string menuType)
+    {
+        foreach(Transform transform in buildingSelectUI)
+        {
+            if(transform.name != "Background")
+            {
+                transform.gameObject.SetActive(false);
+            }
+        }
+
+        Transform menu = null;
+        Enum.TryParse(menuType, out BuildingSO.BuildingMenuType enumerator);
+        switch (enumerator)
+        {
+            case BuildingSO.BuildingMenuType.DEFENSE:
+                menu = buildingSelectUI.Find("DefenseBuildings");
+                break;
+            case BuildingSO.BuildingMenuType.HARVESTING:
+                menu = buildingSelectUI.Find("HarvestingBuildings");
+                break;
+            case BuildingSO.BuildingMenuType.NONE:
+                menu = buildingSelectUI.Find("Menu");
+                break;
+        }
+        menu.gameObject.SetActive(true);
     }
 
 }

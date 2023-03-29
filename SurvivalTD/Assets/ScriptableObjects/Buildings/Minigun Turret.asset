@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Minigun Turret
   m_EditorClassIdentifier: 
   prefab: {fileID: 316381929646429780, guid: 15adbb7531521ce40898e7349ba528fb, type: 3}
+  uiTexture: {fileID: 21300000, guid: bceb883225344ca4bb74c59cd0541336, type: 3}
   nameString: Minigun Turret
   constructionCost:
     cost:
     - item: {fileID: 11400000, guid: 4b9d2b044997a76419c3eb227fb6128f, type: 2}
       amount: 1
   timeToConstruct: 5
+  buidlingMenuType: 1

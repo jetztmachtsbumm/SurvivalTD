@@ -39,7 +39,10 @@ public class BuildingConstruction : MonoBehaviour
         if(constructionTimer <= 0)
         {
             Transform building = Instantiate(constructedBuilding.prefab, transform.position, transform.rotation);
-            building.GetComponent<BuildingInventory>().SetBuildingInventoryUI(buildingInventoryUI);
+            if(building.TryGetComponent(out BuildingInventory buildingInventory))
+            {
+                buildingInventory.SetBuildingInventoryUI(buildingInventoryUI);
+            }
             Destroy(gameObject);
         }
     }
