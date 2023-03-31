@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
         if(defensePhaseTimer <= 0)
         {
             SetCurrentGamePhase(GamePhase.DEFENSE_PHASE);
+            BuildMode.Instance.ToggleBuildingSelectUI(false);
+            BuildMode.Instance.SetInBuildMode(false);
             WaveManager.Instance.SetupNextWave();
             defensePhaseTimer = averageTimeBetweenPhases;
         }

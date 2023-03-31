@@ -52,14 +52,17 @@ public class BuildMode : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (inBuildMode)
+            if (GameManager.Instance.GetCurrentGamePhase() == GameManager.GamePhase.FARMING_PHASE)
             {
-                inBuildMode = false;
-                buildingGhost.gameObject.SetActive(false);
-            }
-            else
-            {
-                ToggleBuildingSelectUI(!inBuildingSelectUI);
+                if (inBuildMode)
+                {
+                    inBuildMode = false;
+                    buildingGhost.gameObject.SetActive(false);
+                }
+                else
+                {
+                    ToggleBuildingSelectUI(!inBuildingSelectUI);
+                }
             }
         }
     }
@@ -69,6 +72,7 @@ public class BuildMode : MonoBehaviour
         if (!inBuildMode)
         {
             errorMessage.SetActive(false);
+            buildingGhost.gameObject.SetActive(false);
             return;
         }
 
@@ -161,7 +165,7 @@ public class BuildMode : MonoBehaviour
         buildingGhost.gameObject.SetActive(true);
     }
 
-    private void ToggleBuildingSelectUI(bool on)
+    public void ToggleBuildingSelectUI(bool on)
     {
         if (on)
         {
@@ -205,4 +209,8 @@ public class BuildMode : MonoBehaviour
         menu.gameObject.SetActive(true);
     }
 
+    public void SetInBuildMode(bool inBuildMode)
+    {
+        this.inBuildMode = inBuildMode;
+    }
 }
