@@ -12,6 +12,7 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField] private float targetingRange;
     [SerializeField] private int attackDamage;
     [SerializeField] private float attacksPerSecond;
+    [SerializeField] private Animator animator;
 
     private HealthSystem healthSystem;
     private Transform targetPosition;
@@ -19,16 +20,24 @@ public abstract class BaseEnemy : MonoBehaviour
     private BaseBuilding targetBuilding;
     private bool continueMoving;
 
-    private void Start()
+    private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
+    }
+
+    private void Start()
+    {
         healthSystem.OnHealthZero += HealthSystem_OnHealthZero;
         continueMoving = true;
     }
 
     private void Update()
     {
-        if (!continueMoving) return;
+        if (!continueMoving)
+        {
+            animator.SetBool("Moving", false);
+            return;
+        }
 
         LookForNewTargets();
         MoveToNextTargetPosition();
@@ -49,6 +58,8 @@ public abstract class BaseEnemy : MonoBehaviour
 
         if (Vector3.Distance(transform.position, LevelGrid.Instance.GetWorldPosition(path[0])) > stoppingDistance)
         {
+            animator.SetBool("Moving", true);
+
             float moveSpeed = 8f;
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
@@ -109,6 +120,7 @@ public abstract class BaseEnemy : MonoBehaviour
         {
             //Animate
             targetBuilding.GetHealthSystem().Damage(attackDamage);
+            animator.SetTrigger("Attack");
             yield return new WaitForSeconds(1 / attacksPerSecond);
         }
 

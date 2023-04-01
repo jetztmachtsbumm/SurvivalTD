@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4339b060dd61c774986d09e6cccec16f, type: 3}
   m_Name: EnemySpider
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6465428350718768086, guid: 2d6072688f0c5044ba43d8f56a00d58a, type: 3}
+  prefab: {fileID: 5445053982114830856, guid: e1f0d228f9760ee42a4f4505d2d61bba, type: 3}
   difficultyScore: 150
