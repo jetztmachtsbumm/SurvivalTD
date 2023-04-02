@@ -222,8 +222,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 7199230788458300211}
   range: 15
-  shotsPerSecond: 50
-  damagePerHit: 3
+  shotsPerSecond: 75
+  damagePerHit: 5
 --- !u!114 &4685808170100534096
 MonoBehaviour:
   m_ObjectHideFlags: 0

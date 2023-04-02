@@ -45,10 +45,11 @@ public abstract class BaseEnemy : MonoBehaviour
 
     private void HealthSystem_OnHealthZero(object sender, EventArgs e)
     {
-        //Logic
-        OnDeath?.Invoke(this, EventArgs.Empty);
-        //DeathAnimation
-        Destroy(gameObject);
+        continueMoving = false;
+        GetComponent<Collider>().enabled = false;
+        transform.Find("HealthSystem(Clone)").gameObject.SetActive(false);
+        animator.SetTrigger("Death");
+        StartCoroutine(Death(animator.GetCurrentAnimatorStateInfo(0).length));
     }
 
     private void MoveToNextTargetPosition()
@@ -127,6 +128,16 @@ public abstract class BaseEnemy : MonoBehaviour
         //Building destroyed
         targetBuilding = MainBuilding.Instance;
         continueMoving = true;
+    }
+
+    private IEnumerator Death(float delay)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(delay + 0.2f);
+            OnDeath?.Invoke(this, EventArgs.Empty);
+            Destroy(gameObject);
+        }
     }
 
     public HealthSystem GetHealthSystem()
