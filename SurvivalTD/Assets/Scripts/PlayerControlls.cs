@@ -35,6 +35,7 @@ public class PlayerControlls : MonoBehaviour
             HandleMovement();
             HandleRotation();
             HandleCameraUpDown();
+            HandleHotbar();
         }
     }
 
@@ -66,6 +67,34 @@ public class PlayerControlls : MonoBehaviour
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 
+    private void HandleHotbar()
+    {
+        if(Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            PlayerInventory.Instance.ScrollHotBarUp();
+        }
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            PlayerInventory.Instance.ScrollHotBarDown();
+        }
+
+        //Number keys
+        for (int i = 0; i < 10; i++)
+        {
+            if (Input.GetKeyDown((KeyCode)(48 + i)))
+            {
+                if(i == 0)
+                {
+                    PlayerInventory.Instance.ChangeHotBarSelectedIndex(10);
+                }
+                else
+                {
+                    PlayerInventory.Instance.ChangeHotBarSelectedIndex(i - 1);
+                }
+            }
+        }
+    }
+
     private void HandleInventory()
     {
         if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Tab))
@@ -90,6 +119,7 @@ public class PlayerControlls : MonoBehaviour
         PlayerInventory.Instance.ToggleUI(true);
         inventoryOn = true;
         ToggleControllsOff();
+        PlayerInventory.Instance.ChangeHotBarSelectedIndex(-1);
     }
 
     private void InventoryOff()
@@ -100,6 +130,7 @@ public class PlayerControlls : MonoBehaviour
         }
         inventoryOn = false;
         ToggleControllsOn();
+        PlayerInventory.Instance.ChangeHotBarSelectedIndex(PlayerInventory.Instance.GetHotbarSelectedIndex());
     }
 
     public void ToggleControllsOn()
@@ -114,6 +145,11 @@ public class PlayerControlls : MonoBehaviour
         controllsEnabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public bool GetControllsEnabled()
+    {
+        return controllsEnabled;
     }
 
 }

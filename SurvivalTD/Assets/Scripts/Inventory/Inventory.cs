@@ -10,7 +10,7 @@ public abstract class Inventory : MonoBehaviour
     [SerializeField] private int slotCount;
     [SerializeField] protected Transform inventoryUI;
 
-    private GameObject inventoryCell;
+    protected GameObject inventoryCell;
     private List<ItemStack> items;
     private List<InventorySlot> slots;
 

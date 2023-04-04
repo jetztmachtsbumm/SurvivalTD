@@ -14,6 +14,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private ItemStack itemStack;
     private Inventory inventory;
+    private bool isHotbarSlot;
 
     public void UpdateVisuals()
     {
@@ -37,6 +38,10 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerExit(PointerEventData eventData)
     {
         selectedVisual.SetActive(false);
+        if (PlayerControlls.Instance.GetControllsEnabled())
+        {
+            PlayerInventory.Instance.ChangeHotBarSelectedIndex(PlayerInventory.Instance.GetHotbarSelectedIndex());
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -54,6 +59,11 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         else
         {
             ItemStack movingItemStack = MovingItem.Instance.GetItemStack();
+
+            if(isHotbarSlot && !(movingItemStack.item is EquippableItemSO))
+            {
+                return;
+            }
 
             if(itemStack != null)
             {
@@ -81,6 +91,16 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
+    }
+
+    public void SetIsHotbarSlot(bool isHotbarSlot)
+    {
+        this.isHotbarSlot = isHotbarSlot;
+    }
+
+    public void ToggleSelectedVisual(bool on)
+    {
+        selectedVisual.SetActive(on);
     }
 
 }
