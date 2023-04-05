@@ -40,13 +40,21 @@ public abstract class Inventory : MonoBehaviour
         }
         else
         {
-            foreach(InventorySlot inventorySlot in slots)
+            if (slot.IsHotbarSlot())
             {
-                if(inventorySlot == slot)
+                slot.SetItemStack(itemStack);
+                slot.UpdateVisuals();
+            }
+            else
+            {
+                foreach(InventorySlot inventorySlot in slots)
                 {
-                    inventorySlot.SetItemStack(itemStack);
-                    inventorySlot.UpdateVisuals();
-                    return;
+                    if(inventorySlot == slot)
+                    {
+                        inventorySlot.SetItemStack(itemStack);
+                        inventorySlot.UpdateVisuals();
+                        return;
+                    }
                 }
             }
         }
@@ -62,11 +70,8 @@ public abstract class Inventory : MonoBehaviour
                 if(stack.amount <= 0)
                 {
                     items.Remove(stack);
-                    UpdateSlots(stack);
                     return;
                 }
-
-                UpdateSlots(stack);
                 return;
             }
         }

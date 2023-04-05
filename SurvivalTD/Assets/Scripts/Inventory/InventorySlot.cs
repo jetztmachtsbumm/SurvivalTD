@@ -53,6 +53,8 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             MovingItem.Instance.SetItemStack(itemStack);
             int amount = MovingItem.Instance.GetItemStack().amount;
             inventory.RemoveItem(itemStack);
+            SetItemStack(null);
+            UpdateVisuals();
             MovingItem.Instance.gameObject.SetActive(true);
             MovingItem.Instance.GetItemStack().amount = amount;
         }
@@ -81,6 +83,11 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public ItemStack GetItemStack()
     {
         return itemStack;
+    }
+
+    public bool IsHotbarSlot()
+    {
+        return isHotbarSlot;
     }
 
     public void SetItemStack(ItemStack itemStack)

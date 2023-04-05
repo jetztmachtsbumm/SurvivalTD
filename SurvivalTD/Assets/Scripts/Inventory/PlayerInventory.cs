@@ -12,6 +12,7 @@ public class PlayerInventory : Inventory
 
     private InventorySlot[] hotBar;
     private int hotBarSelectedIndex;
+    private GameObject activeEquippment;
 
     protected override void Awake()
     {
@@ -51,6 +52,15 @@ public class PlayerInventory : Inventory
 
         hotBarSelectedIndex = index;
         hotBar[index].ToggleSelectedVisual(true);
+
+        ItemStack itemStack = hotBar[index].GetItemStack();
+        activeEquippment?.SetActive(false);
+        if (itemStack != null)
+        {
+            EquippableItemSO equippment = itemStack.item as EquippableItemSO;
+            activeEquippment =  Camera.main.transform.Find("PlayerEquippment").Find(equippment.gameObjectName).gameObject;
+            activeEquippment.SetActive(true);
+        }
     }
 
     public void ScrollHotBarUp()
