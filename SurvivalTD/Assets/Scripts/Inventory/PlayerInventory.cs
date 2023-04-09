@@ -103,4 +103,9 @@ public class PlayerInventory : Inventory
         return hotBarSelectedIndex;
     }
 
+    public GameObject GetActiveEquippment()
+    {
+        return activeEquippment;
+    }
+
 }

@@ -36,6 +36,7 @@ public class PlayerControlls : MonoBehaviour
             HandleRotation();
             HandleCameraUpDown();
             HandleHotbar();
+            HandleEquippment();
         }
     }
 
@@ -111,6 +112,21 @@ public class PlayerControlls : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             InventoryOff();
+        }
+    }
+
+    private void HandleEquippment()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            GameObject activeEquippment = PlayerInventory.Instance.GetActiveEquippment();
+            if (activeEquippment != null)
+            {
+                if (activeEquippment.TryGetComponent(out IEquippment equippment))
+                {
+                    equippment.Use();
+                }
+            }
         }
     }
 
