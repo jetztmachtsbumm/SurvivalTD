@@ -10,6 +10,7 @@ public class PlayerControlls : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float mouseSensitivity;
 
+    private PlayerInputActions playerInputActions;
     private float xRotation = 0;
     private bool inventoryOn;
     private bool controllsEnabled = true;
@@ -23,6 +24,9 @@ public class PlayerControlls : MonoBehaviour
         }
         Instance = this;
 
+        playerInputActions = new PlayerInputActions();
+        playerInputActions.Player.Enable();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -33,8 +37,7 @@ public class PlayerControlls : MonoBehaviour
         if (controllsEnabled)
         {
             HandleMovement();
-            HandleRotation();
-            HandleCameraUpDown();
+            HandleLook();
             HandleHotbar();
             HandleEquippment();
         }
@@ -42,29 +45,23 @@ public class PlayerControlls : MonoBehaviour
 
     private void HandleMovement()
     {
-        float xMovement = Input.GetAxisRaw("Horizontal");
-        float zMovement = Input.GetAxisRaw("Vertical");
+        Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
 
-        Vector3 movement = new Vector3(xMovement, 0, zMovement) * movementSpeed * Time.deltaTime;
+        Vector3 movement = new Vector3(inputVector.x, 0, inputVector.y) * movementSpeed * Time.deltaTime;
 
         transform.Translate(movement);
     }
 
-    private void HandleRotation()
+    private void HandleLook()
     {
-        float mouseX = Input.GetAxis("Mouse X");
-
-        Vector3 rotation = new Vector3(0, mouseX, 0) * mouseSensitivity * 10 * Time.deltaTime;
-
+        //Left Right
+        Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
+        Vector3 rotation = new Vector3(0, inputVector.x, 0) * mouseSensitivity * 10 * Time.deltaTime;
         transform.Rotate(rotation);
-    }
 
-    private void HandleCameraUpDown()
-    {
-        xRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity / 15;
-
+        //Camera up/down
+        xRotation -= inputVector.y * mouseSensitivity / 15;
         xRotation = Mathf.Clamp(xRotation, -90, 70);
-
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 
