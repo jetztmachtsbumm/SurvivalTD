@@ -26,6 +26,10 @@ public class PlayerControlls : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+        playerInputActions.Player.ScrollHotbarUP.performed += ScrollHotbarUP_performed;
+        playerInputActions.Player.ScrollHotbarDown.performed += ScrollHotbarDown_performed;
+        playerInputActions.Player.ToggleInventory.performed += ToggleInventory_performed;
+        playerInputActions.Player.Escape.performed += Escape_performed;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -33,12 +37,11 @@ public class PlayerControlls : MonoBehaviour
 
     private void Update()
     {
-        HandleInventory();
         if (controllsEnabled)
         {
             HandleMovement();
             HandleLook();
-            HandleHotbar();
+            HandleHotbarNumberKeys();
             HandleEquippment();
         }
     }
@@ -56,27 +59,27 @@ public class PlayerControlls : MonoBehaviour
     {
         //Left Right
         Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
-        Vector3 rotation = new Vector3(0, inputVector.x, 0) * mouseSensitivity * 10 * Time.deltaTime;
+        Vector3 rotation = new Vector3(0, inputVector.x, 0) * mouseSensitivity * Time.deltaTime;
         transform.Rotate(rotation);
 
         //Camera up/down
-        xRotation -= inputVector.y * mouseSensitivity / 15;
+        xRotation -= inputVector.y * mouseSensitivity;
         xRotation = Mathf.Clamp(xRotation, -90, 70);
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 
-    private void HandleHotbar()
+    private void ScrollHotbarUP_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if(Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            PlayerInventory.Instance.ScrollHotBarUp();
-        }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            PlayerInventory.Instance.ScrollHotBarDown();
-        }
+        PlayerInventory.Instance.ScrollHotBarUp();
+    }
 
-        //Number keys
+    private void ScrollHotbarDown_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        PlayerInventory.Instance.ScrollHotBarDown();
+    }
+
+    private void HandleHotbarNumberKeys()
+    {
         for (int i = 0; i < 10; i++)
         {
             if (Input.GetKeyDown((KeyCode)(48 + i)))
@@ -93,35 +96,57 @@ public class PlayerControlls : MonoBehaviour
         }
     }
 
-    private void HandleInventory()
+    private void ToggleInventory_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Tab))
+        if (!inventoryOn)
         {
-            if (!inventoryOn)
-            {
-                InventoryOn();
-            }
-            else
-            {
-                InventoryOff();
-            }
+            InventoryOn();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        else
         {
             InventoryOff();
         }
     }
 
-    private void HandleEquippment()
+    private void Escape_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (Input.GetMouseButton(0))
+        if (inventoryOn)
         {
-            GameObject activeEquippment = PlayerInventory.Instance.GetActiveEquippment();
-            if (activeEquippment != null)
+            InventoryOff();
+        }
+    }
+
+    public void HandleEquippment()
+    {
+        if (controllsEnabled)
+        {
+            float use = playerInputActions.Player.Equippment_Use.ReadValue<float>();
+            float altUse = playerInputActions.Player.Equippment_AltUse.ReadValue<float>();
+
+            if (use > 0)
             {
-                if (activeEquippment.TryGetComponent(out IEquippment equippment))
+                GameObject activeEquippment = PlayerInventory.Instance.GetActiveEquippment();
+                if (activeEquippment != null)
                 {
-                    equippment.Use();
+                    if (activeEquippment.TryGetComponent(out IEquippment equippment))
+                    {
+                        equippment.Use();
+                    }
+                }
+            }
+
+            if (altUse > 0)
+            {
+                if (controllsEnabled)
+                {
+                    GameObject activeEquippment = PlayerInventory.Instance.GetActiveEquippment();
+                    if (activeEquippment != null)
+                    {
+                        if (activeEquippment.TryGetComponent(out IEquippment equippment))
+                        {
+                            equippment.AltUse();
+                        }
+                    }
                 }
             }
         }

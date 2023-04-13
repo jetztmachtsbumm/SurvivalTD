@@ -44,6 +44,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Equippment_Use"",
+                    ""type"": ""Value"",
+                    ""id"": ""80d971ed-9a3a-425a-97f5-214bca41261b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Equippment_AltUse"",
+                    ""type"": ""Value"",
+                    ""id"": ""8aca5359-93ed-4a65-8fba-30992783b687"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ScrollHotbarUP"",
+                    ""type"": ""Value"",
+                    ""id"": ""5112e671-62b4-4e29-9aad-a82b78744280"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ScrollHotbarDown"",
+                    ""type"": ""Value"",
+                    ""id"": ""0fe86447-e650-43f2-9834-0864a40cab7b"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""523ebf80-bb59-48ba-9f05-e6aa9fddb618"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""06df4e7b-0037-4f06-a3d0-25b69539d088"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -173,7 +227,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""292142a0-b64e-4158-b32b-0ddd45f660df"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=10,y=0.05)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -184,9 +238,152 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""5f141310-c81d-467e-82bc-89c627d6e781"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone,ScaleVector2(x=20,y=5)"",
+                    ""processors"": ""StickDeadzone,ScaleVector2(x=100,y=0.3)"",
                     ""groups"": """",
                     ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d47143e-6d96-4d85-8bbb-4add2fa1f49c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equippment_Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd7ea176-7647-41c8-935f-962328a55bab"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equippment_Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""709b8178-5356-4682-be3a-980582179281"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equippment_AltUse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d5bd47f-80ea-48f6-bc8b-1b5c92e61f0d"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equippment_AltUse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa1ab52c-d5ce-45a4-ad97-4cbb80afc0c8"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollHotbarUP"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a0517d1-40b6-4259-a21f-024dfcf28713"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollHotbarUP"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e3a96b1-a026-4a92-b2f9-75b71839baee"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollHotbarDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd82731d-8713-4d96-860b-3c0cb3d58ae6"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollHotbarDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9bb89ecd-e6b0-452e-b368-7f61a918a2a6"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c99c90b7-64ab-4531-ae33-2b3a822dc571"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54521971-6fcd-4c87-9b6d-cfee7bca7b43"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a3f3e5c-bcde-458e-accf-c9cda2fb2e12"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfecf0fd-6902-4560-a085-f432bb951b74"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -199,6 +396,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_Equippment_Use = m_Player.FindAction("Equippment_Use", throwIfNotFound: true);
+        m_Player_Equippment_AltUse = m_Player.FindAction("Equippment_AltUse", throwIfNotFound: true);
+        m_Player_ScrollHotbarUP = m_Player.FindAction("ScrollHotbarUP", throwIfNotFound: true);
+        m_Player_ScrollHotbarDown = m_Player.FindAction("ScrollHotbarDown", throwIfNotFound: true);
+        m_Player_ToggleInventory = m_Player.FindAction("ToggleInventory", throwIfNotFound: true);
+        m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -262,12 +465,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_Equippment_Use;
+    private readonly InputAction m_Player_Equippment_AltUse;
+    private readonly InputAction m_Player_ScrollHotbarUP;
+    private readonly InputAction m_Player_ScrollHotbarDown;
+    private readonly InputAction m_Player_ToggleInventory;
+    private readonly InputAction m_Player_Escape;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
+        public InputAction @Equippment_Use => m_Wrapper.m_Player_Equippment_Use;
+        public InputAction @Equippment_AltUse => m_Wrapper.m_Player_Equippment_AltUse;
+        public InputAction @ScrollHotbarUP => m_Wrapper.m_Player_ScrollHotbarUP;
+        public InputAction @ScrollHotbarDown => m_Wrapper.m_Player_ScrollHotbarDown;
+        public InputAction @ToggleInventory => m_Wrapper.m_Player_ToggleInventory;
+        public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -283,6 +498,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Equippment_Use.started += instance.OnEquippment_Use;
+            @Equippment_Use.performed += instance.OnEquippment_Use;
+            @Equippment_Use.canceled += instance.OnEquippment_Use;
+            @Equippment_AltUse.started += instance.OnEquippment_AltUse;
+            @Equippment_AltUse.performed += instance.OnEquippment_AltUse;
+            @Equippment_AltUse.canceled += instance.OnEquippment_AltUse;
+            @ScrollHotbarUP.started += instance.OnScrollHotbarUP;
+            @ScrollHotbarUP.performed += instance.OnScrollHotbarUP;
+            @ScrollHotbarUP.canceled += instance.OnScrollHotbarUP;
+            @ScrollHotbarDown.started += instance.OnScrollHotbarDown;
+            @ScrollHotbarDown.performed += instance.OnScrollHotbarDown;
+            @ScrollHotbarDown.canceled += instance.OnScrollHotbarDown;
+            @ToggleInventory.started += instance.OnToggleInventory;
+            @ToggleInventory.performed += instance.OnToggleInventory;
+            @ToggleInventory.canceled += instance.OnToggleInventory;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -293,6 +526,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Equippment_Use.started -= instance.OnEquippment_Use;
+            @Equippment_Use.performed -= instance.OnEquippment_Use;
+            @Equippment_Use.canceled -= instance.OnEquippment_Use;
+            @Equippment_AltUse.started -= instance.OnEquippment_AltUse;
+            @Equippment_AltUse.performed -= instance.OnEquippment_AltUse;
+            @Equippment_AltUse.canceled -= instance.OnEquippment_AltUse;
+            @ScrollHotbarUP.started -= instance.OnScrollHotbarUP;
+            @ScrollHotbarUP.performed -= instance.OnScrollHotbarUP;
+            @ScrollHotbarUP.canceled -= instance.OnScrollHotbarUP;
+            @ScrollHotbarDown.started -= instance.OnScrollHotbarDown;
+            @ScrollHotbarDown.performed -= instance.OnScrollHotbarDown;
+            @ScrollHotbarDown.canceled -= instance.OnScrollHotbarDown;
+            @ToggleInventory.started -= instance.OnToggleInventory;
+            @ToggleInventory.performed -= instance.OnToggleInventory;
+            @ToggleInventory.canceled -= instance.OnToggleInventory;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -314,5 +565,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnEquippment_Use(InputAction.CallbackContext context);
+        void OnEquippment_AltUse(InputAction.CallbackContext context);
+        void OnScrollHotbarUP(InputAction.CallbackContext context);
+        void OnScrollHotbarDown(InputAction.CallbackContext context);
+        void OnToggleInventory(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }

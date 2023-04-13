@@ -5,34 +5,72 @@ using UnityEngine;
 public class Sword : MonoBehaviour, IEquippment
 {
 
-    [SerializeField] private int damagePerHit;
-    [SerializeField] private float attacksPerSecond;
+    [SerializeField] private int damagePerLightHit;
+    [SerializeField] private int damagePerHeavyHit;
+    [SerializeField] private float lightAttacksPerSecond;
+    [SerializeField] private float heavyAttacksPerSecond;
+    [SerializeField] private Animator animator;
 
     private bool canAttack;
+    private bool heavyAttack;
+    private bool canDamage;
+
+    private void Awake()
+    {
+        canAttack = true;
+        canDamage = false;
+    }
 
     public void Use()
     {
         if (canAttack)
         {
-            //Trigger animation
-            StartCoroutine(AttackCooldown());
+            animator.SetTrigger("LightAttack");
+            canAttack = false;
+            canDamage = true;
+            StartCoroutine(AttackCooldown(false));
+        }
+    }
+
+    public void AltUse()
+    {
+        if (canAttack)
+        {
+            animator.SetTrigger("HeavyAttack");
+            canAttack = false;
+            canDamage = true;
+            StartCoroutine(AttackCooldown(true));
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out BaseEnemy enemy))
+        if (canDamage)
         {
-            enemy.GetHealthSystem().Damage(damagePerHit);
+            if(other.TryGetComponent(out BaseEnemy enemy))
+            {
+                enemy.GetHealthSystem().Damage(heavyAttack ? damagePerHeavyHit : damagePerLightHit);
+                canDamage = false;
+            }
         }
     }
 
-    private IEnumerator AttackCooldown()
+    private IEnumerator AttackCooldown(bool heavyAttack)
     {
+        this.heavyAttack = heavyAttack;
         while (!canAttack)
         {
-            yield return new WaitForSeconds(1 / attacksPerSecond);
+            if (heavyAttack)
+            {
+                yield return new WaitForSeconds(1 / heavyAttacksPerSecond);
+            }
+            else
+            {
+                yield return new WaitForSeconds(1 / lightAttacksPerSecond);
+            }
             canAttack = true;
+            this.heavyAttack = false;
+            canDamage = false;
         }
     }
 

@@ -9,6 +9,7 @@ public class PlayerInventory : Inventory
 
     [SerializeField] private Transform hotbarUI;
     [SerializeField] private int hotbarSize;
+    [SerializeField] private List<GameObject> playerEquipment;
 
     private InventorySlot[] hotBar;
     private int hotBarSelectedIndex;
@@ -58,8 +59,15 @@ public class PlayerInventory : Inventory
         if (itemStack != null)
         {
             EquippableItemSO equippment = itemStack.item as EquippableItemSO;
-            activeEquippment =  Camera.main.transform.Find("PlayerEquippment").Find(equippment.gameObjectName).gameObject;
-            activeEquippment.SetActive(true);
+            foreach(GameObject gameObject in playerEquipment)
+            {
+                if (gameObject.transform.name.Equals(equippment.gameObjectName))
+                {
+                    activeEquippment = gameObject;
+                    break;
+                }
+            }
+            activeEquippment?.SetActive(true);
         }
     }
 
