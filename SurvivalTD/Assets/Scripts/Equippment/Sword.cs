@@ -17,8 +17,15 @@ public class Sword : MonoBehaviour, IEquippment
 
     private void Awake()
     {
-        canAttack = true;
         canDamage = false;
+    }
+
+    public void Equip()
+    {
+        animator.SetTrigger("Equip");
+        canAttack = false;
+        canDamage = false;
+        StartCoroutine(AwaitEquipAnimationFinish(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length));
     }
 
     public void Use()
@@ -71,6 +78,16 @@ public class Sword : MonoBehaviour, IEquippment
             canAttack = true;
             this.heavyAttack = false;
             canDamage = false;
+        }
+    }
+
+    private IEnumerator AwaitEquipAnimationFinish(float clipDuration)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(clipDuration);
+            canAttack = true;
+            break;
         }
     }
 

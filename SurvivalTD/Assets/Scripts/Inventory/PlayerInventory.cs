@@ -44,13 +44,12 @@ public class PlayerInventory : Inventory
             return;
         }
 
-        hotBar[hotBarSelectedIndex].ToggleSelectedVisual(false);
-
         if(index < 0)
         {
             return;
         }
 
+        hotBar[hotBarSelectedIndex].ToggleSelectedVisual(false);
         hotBarSelectedIndex = index;
         hotBar[index].ToggleSelectedVisual(true);
 
@@ -68,6 +67,7 @@ public class PlayerInventory : Inventory
                 }
             }
             activeEquippment?.SetActive(true);
+            activeEquippment?.GetComponent<IEquippment>().Equip();
         }
     }
 
