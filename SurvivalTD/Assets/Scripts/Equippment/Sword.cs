@@ -10,6 +10,7 @@ public class Sword : MonoBehaviour, IEquippment
     [SerializeField] private float lightAttacksPerSecond;
     [SerializeField] private float heavyAttacksPerSecond;
     [SerializeField] private Animator animator;
+    [SerializeField] private AnimationClip equipAnimationClip;
 
     private bool canAttack;
     private bool heavyAttack;
@@ -22,16 +23,18 @@ public class Sword : MonoBehaviour, IEquippment
 
     public void Equip()
     {
+        animator.SetBool("IsWalking", false);
         animator.SetTrigger("Equip");
         canAttack = false;
         canDamage = false;
-        StartCoroutine(AwaitEquipAnimationFinish(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length));
+        StartCoroutine(AwaitEquipAnimationFinish(equipAnimationClip.length));
     }
 
     public void Use()
     {
         if (canAttack)
         {
+            animator.SetBool("IsWalking", false);
             animator.SetTrigger("LightAttack");
             canAttack = false;
             canDamage = true;
@@ -43,6 +46,7 @@ public class Sword : MonoBehaviour, IEquippment
     {
         if (canAttack)
         {
+            animator.SetBool("IsWalking", false);
             animator.SetTrigger("HeavyAttack");
             canAttack = false;
             canDamage = true;

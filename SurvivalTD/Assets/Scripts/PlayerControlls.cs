@@ -9,6 +9,7 @@ public class PlayerControlls : MonoBehaviour
 
     [SerializeField] private float movementSpeed;
     [SerializeField] private float mouseSensitivity;
+    [SerializeField] private Animator playerEquippmentAnimator;
 
     private PlayerInputActions playerInputActions;
     private float xRotation = 0;
@@ -50,7 +51,9 @@ public class PlayerControlls : MonoBehaviour
     {
         Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
 
-        Vector3 movement = new Vector3(inputVector.x, 0, inputVector.y) * movementSpeed * Time.deltaTime;
+        Vector3 movement = movementSpeed * Time.deltaTime * new Vector3(inputVector.x, 0, inputVector.y);
+
+        playerEquippmentAnimator.SetBool("IsWalking", movement != Vector3.zero);
 
         transform.Translate(movement);
     }
@@ -59,7 +62,7 @@ public class PlayerControlls : MonoBehaviour
     {
         //Left Right
         Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
-        Vector3 rotation = new Vector3(0, inputVector.x, 0) * mouseSensitivity * Time.deltaTime;
+        Vector3 rotation = mouseSensitivity * Time.deltaTime * new Vector3(0, inputVector.x, 0);
         transform.Rotate(rotation);
 
         //Camera up/down
