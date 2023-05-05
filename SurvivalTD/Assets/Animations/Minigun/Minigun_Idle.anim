@@ -19,7 +19,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: -83.277}
+        value: {x: 0, y: 90, z: -83.277}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -27,10 +27,28 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
+        time: 1.4333333
+        value: {x: 0, y: 90, z: -88.10495}
+        inSlope: {x: 0, y: 0, z: -3.6549988}
+        outSlope: {x: 0, y: 0, z: -3.6549988}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
         time: 2
-        value: {x: 0, y: 0, z: -89.277}
+        value: {x: 0, y: 90, z: -89.277}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 3.5333333
+        value: {x: 0, y: 90, z: -84.10455}
+        inSlope: {x: 0, y: 0, z: 3.2200012}
+        outSlope: {x: 0, y: 0, z: 3.2200012}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
@@ -38,6 +56,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 4
         value: {x: 0, y: 0, z: -83.277}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 4.016667
+        value: {x: 0, y: 90, z: -83.277}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -212,7 +239,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 4
+    m_StopTime: 4.016667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -273,7 +300,16 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 90
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.4333333
+        value: 90
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -282,7 +318,16 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 2
-        value: 0
+        value: 90
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 3.5333333
+        value: 90
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -292,6 +337,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 4
         value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 4.016667
+        value: 90
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -768,7 +822,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "Hals_Unten/Ger\xFCst/Joint1"
+    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2/Joint3/Mini/MingunRohre_Achse"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -780,7 +834,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: "Hals_Unten/Ger\xFCst/Joint1"
+    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2/Joint3/Mini/MingunRohre_Achse"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -792,7 +846,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: "Hals_Unten/Ger\xFCst/Joint1"
+    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2/Joint3/Mini/MingunRohre_Achse"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -840,7 +894,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2/Joint3/Mini/MingunRohre_Achse"
+    path: "Hals_Unten/Ger\xFCst/Joint1"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -852,7 +906,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2/Joint3/Mini/MingunRohre_Achse"
+    path: "Hals_Unten/Ger\xFCst/Joint1"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -864,7 +918,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2/Joint3/Mini/MingunRohre_Achse"
+    path: "Hals_Unten/Ger\xFCst/Joint1"
     classID: 4
     script: {fileID: 0}
     flags: 0

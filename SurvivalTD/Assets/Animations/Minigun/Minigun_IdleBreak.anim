@@ -89,7 +89,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: -83.277}
+        value: {x: 0, y: 90, z: -83.277}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -678,7 +678,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 90
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1380,7 +1380,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "Hals_Unten/Ger\xFCst/Joint1"
+    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1392,19 +1392,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: "Hals_Unten/Ger\xFCst/Joint1"
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: "Hals_Unten/Ger\xFCst/Joint1"
+    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1427,8 +1415,20 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: "Hals_Unten/Ger\xFCst/Joint1"
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2"
+    path: "Hals_Unten/Ger\xFCst/Joint1"
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1440,7 +1440,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "Hals_Unten/Ger\xFCst/Joint1/Joint2"
+    path: "Hals_Unten/Ger\xFCst/Joint1"
     classID: 4
     script: {fileID: 0}
     flags: 0

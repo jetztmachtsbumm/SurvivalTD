@@ -55,7 +55,6 @@ public class PlayerInventory : Inventory
 
         ItemStack itemStack = hotBar[index].GetItemStack();
         activeEquippment?.SetActive(false);
-        Debug.Log("DEBUG1");
         if (itemStack != null)
         {
             EquippableItemSO equippment = itemStack.item as EquippableItemSO;

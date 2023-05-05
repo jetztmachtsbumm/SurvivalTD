@@ -10,7 +10,8 @@ public abstract class AttackingBuilding : BaseBuilding
     [SerializeField] private float shotsPerSecond;
     [SerializeField] private int damagePerHit;
 
-    private BaseEnemy target;
+    protected BaseEnemy target;
+
     private bool attackingTarget;
     private Coroutine coroutine;
 
@@ -20,9 +21,9 @@ public abstract class AttackingBuilding : BaseBuilding
         GetHealthSystem().OnHealthZero += AttackingBuilding_OnHealthZero;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if(target == null)
+        if (target == null)
         {
             SeekTarget();
         }
@@ -41,8 +42,6 @@ public abstract class AttackingBuilding : BaseBuilding
                 ResetTarget();
                 return;
             }
-
-            //TODO: Rotate towards enemy
 
             if (!attackingTarget)
             {
